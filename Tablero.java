@@ -31,29 +31,28 @@ public class Tablero{
 	}
 
 	public String toString(){
-          return "      A   B   C   D   E   F  \n" +
-                  "    + — + — + — + — + — + — +\n" +
-               this.forToString(0) +
+        return "      A   B   C   D   E   F  \n" +
                "    + — + — + — + — + — + — +\n" +
-               " 2  | " + tablero[1][0].toString() + " | " + tablero[1][1].toString() + " | " + tablero[1][2].toString() + " | " + tablero[1][3].toString() + " | " + tablero[1][4].toString() + " | " + tablero[1][5].toString() + " |\n" +
+                             this.forToString(1) +
+               "    + — + — + — + — + — + — +\n" +
+                             this.forToString(2) +
                "    + — + — + — + — + — + — +\n" +
                " 3  |   |   |   |   |   |   |\n" +
                "    + — + — + — + — + — + — +\n" +
                " 4  |   |   |   |   |   |   |\n" +
                "    + — + — + — + — + — + — +\n" +
-               " 5  | " + tablero[4][0].toString() + " | " + tablero[4][1].toString() + " | " + tablero[4][2].toString() + " | " + tablero[4][3].toString() + " | " + tablero[4][4].toString() + " | " + tablero[4][5].toString() + " |\n" +
+                             this.forToString(5) +
                "    + — + — + — + — + — + — +\n" +
-               " 6  | " + tablero[5][0].toString() + " | " + tablero[5][1].toString() + " | " + tablero[5][2].toString() + " | " + tablero[5][3].toString() + " | " + tablero[5][4].toString() + " | " + tablero[5][5].toString() + " |\n" +
+                             this.forToString(6) +
                "    + — + — + — + — + — + — +";
      }
 
-	private String forToString(int fixed){
-	     String string = " " + (fixed+1) + "  | ";
-	     for(int i=0;i<=5;i++)
-	          string += tablero[fixed][i].toString() + " | ";
-	     string += "\n";
+	private String forToString(int renglon){
+	    String string = " " + (renglon) + "  | ";
+	    for(int i=0;i<=5;i++) string += tablero[renglon-1][i].toString() + " | ";
+	    string += "\n";
 
-	     return string;
+	    return string;
 }
 
 }
