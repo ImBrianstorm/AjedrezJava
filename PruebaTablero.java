@@ -1,6 +1,8 @@
 public class PruebaTablero{
 	public static void main(String[] args){
-		Tablero tablero = new Tablero();
-		System.out.println(tablero.toString());
+		Tablero prueba = new Tablero();
+		prueba.iniciarJuego()
+;		System.out.println("Ten tu puto tablero\n\n" + prueba.toString());
 	}
 }
+

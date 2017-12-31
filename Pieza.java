@@ -16,6 +16,14 @@ public abstract class Pieza{
 		this.jugador = jugador;
 	}
 
+	public String obtenerNombrePieza(){
+		return pieza;
+	}
+
+	public int obtenerNumeroJugador(){
+		return jugador;
+	}
+
 	public void actualizarCoordenadas(int x, int y){
 		this.x = x;
 		this.y = y;
@@ -24,4 +32,12 @@ public abstract class Pieza{
 	public abstract void mover(int x, int y);
 
 	public abstract void eliminar();
+
+	public String toString() {
+		if(this==null) 
+			return " ";
+		else
+			return (jugador==1) ? String.valueOf(pieza.charAt(0)) : String.valueOf(pieza.charAt(0)).toLowerCase();
+	}
+
 }

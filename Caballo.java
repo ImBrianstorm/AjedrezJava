@@ -10,4 +10,5 @@ public class Caballo extends Pieza{
 	public void eliminar(){
 		
 	}
+
 }
