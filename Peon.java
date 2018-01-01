@@ -1,13 +1,9 @@
 public class Peon extends Pieza{
-	public Peon(int equipo,int x,int y){
-		super("Peon",equipo,x,y);
+	public Peon(int jugador,int columna,int fila){
+		super("Peon",jugador,columna,fila);
 	}
 
-	public void mover(int x,int y){
-		
-	}
-
-	public void eliminar(){
-		
+	public void validarMovimiento(int columna, int fila) throws MovimientoNoValidoExcepcion{
+		if(this.obtener)
 	}
 }
