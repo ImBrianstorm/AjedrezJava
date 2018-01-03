@@ -1,62 +1,77 @@
-public abstract class Pieza{
-	
-	private String pieza;
-	private int jugador;
-	private int columna;
-	private int fila;
+/**
+ *
+ * @author Mauricio Chávez
+ */
+public abstract class Pieza {
+    private String nombre;
+    private int numeroJugador;
+    private int fila;
+    private int columna;
+    private static int numeroMovimientos;
 
-	public Pieza(String pieza, int jugador, int columna, int fila){
-		this.pieza = pieza;
-		this.jugador = jugador ;
-		this.columna = columna;
-		this.fila =fila;
-	}
+    public Pieza(String nombre,int numeroJugador,int fila,int columna){
+        this.nombre = nombre;
+        this.numeroJugador = numeroJugador ;
+        this.fila = fila;
+        this.columna = columna;
+        this.numeroMovimientos = 0;
+    }
 
-	public void asignarJugador(int jugador){
-		this.jugador = jugador;
-	}
+    public void asignarNombre(String nombre){
+        this.nombre = nombre ;
+    }
 
-	public void asignarNombrePieza(String nombre){
-		this.pieza = nombre ;
-	}
+    public void asignarNumeroJugador(int numeroJugador){
+        this.numeroJugador = numeroJugador;
+    }
 
-	public void asignarCoordenadas(int columna, int fila){
-		this.columna = columna;
-		this.fila = fila;
-	}
+    public void asignarPosicion(int fila,int columna){
+        this.fila = fila;
+        this.columna = columna;
+    }
 
-	public String obtenerNombrePieza(){
-		return pieza;
-	}
+    public String obtenerNombre(){
+        return nombre;
+    }
 
-	public int obtenerNumeroJugador(){
-		return jugador;
-	}
+    public int obtenerNumeroJugador(){
+        return numeroJugador;
+    }
 
-	public int obtenerNumeroColumna(){
-		return columna;
-	}
+    public int obtenerColumna(){
+        return columna;
+    }
 
-	public int obtenerNumeroFila(){
-		return fila;
-	}
+    public int obtenerFila(){
+        return fila;
+    }
 
-	public abstract void validarMovimiento(int columna, int fila,Pieza[][] arregloPiezas) throws MovimientoNoValidoExcepcion;
+    public int obtenerNumeroMovimientos(){
+    	return numeroMovimientos ;
+    }
 
-	public void validarEliminar(Pieza piezaEliminada)throws EliminacionInvalidaExcepcion{
-		if(piezaEliminada==null){
-			throw new EliminacionInvalidaExcepcion("No puedes eliminar una pieza que no existe");
-		}
-		else if(this.obtenerNumeroJugador()==piezaEliminada.obtenerNumeroJugador()){
-			throw new EliminacionInvalidaExcepcion("No puedes eliminar esta pieza porque es tuya.");
-		}
-	}
+   	public abstract void validarMovimiento(int fila,int columna, Tablero tablero) throws MovimientoNoValidoExcepcion;
 
-	public String toString() {
-		if(this==null) 
-			return " ";
-		else
-			return (jugador==1) ? String.valueOf(pieza.charAt(0)) : String.valueOf(pieza.charAt(0)).toLowerCase();
-	}
+   	/**
+     *
+     * @param piezaEliminada
+     * @throws EliminacionInvalidaExcepcion
+     */
+    public void validarEliminar(Pieza piezaEliminada) throws EliminacionInvalidaExcepcion{
+        if(piezaEliminada==null){
+            throw new EliminacionInvalidaExcepcion("No puedes eliminar una pieza que no existe");
+        }
+        else if(this.obtenerNumeroJugador()==piezaEliminada.obtenerNumeroJugador()){
+            throw new EliminacionInvalidaExcepcion("No puedes eliminar esta pieza porque es tuya.");
+        }
+    }
+    
 
+    @Override
+    public String toString() {
+        if(this==null) 
+            return " ";
+        else
+            return (numeroJugador==1) ? String.valueOf(nombre.charAt(0)) : String.valueOf(nombre.charAt(0)).toLowerCase();
+    }
 }

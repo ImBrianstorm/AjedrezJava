@@ -1,6 +1,6 @@
 public class PruebaTablero{
 	public static void main(String[] args){
-		Tablero prueba = new Tablero();
+		Juego prueba = new Juego();
 		prueba.iniciarJuego();
 		System.out.println("\n\n" + prueba.toString());
 		prueba.moverPieza(prueba.obtenerPieza(2,6),1,4);

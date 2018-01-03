@@ -1,5 +1,14 @@
+/**
+ *
+ * @author Mauricio Chávez
+ */
 public class MovimientoNoValidoExcepcion extends Exception{
-	public MovimientoNoValidoExcepcion(String s){
-		super(s);
+
+	public MovimientoNoValidoExcepcion(){
+		
 	}
+
+	public MovimientoNoValidoExcepcion(String msg) {
+        super(msg);
+    }
 }
