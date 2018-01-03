@@ -35,18 +35,18 @@ public class Tablero{
 		tablero[pieza.obtenerFila()-1][pieza.obtenerColumna()-1] = null;
 	}
 
-	
 
-	public void moverPieza(Pieza pieza, int columna, int fila){
+	public void moverPieza(Pieza pieza,int fila,int columna){
 		try{
-			pieza.validarMovimiento(columna,fila,this);
-			if(obtenerPieza(columna,fila) != null){
-				pieza.validarEliminar(obtenerPieza(columna,fila));
-				eliminarPieza(pieza,obtenerPieza(columna,fila));
+			pieza.validarMovimiento(fila,columna,this);
+			if(obtenerPieza(fila,columna) != null){
+				pieza.validarEliminar(obtenerPieza(fila,columna));
+				eliminarPieza(pieza,obtenerPieza(fila,columna));
 			}
 			quitarPiezaTablero(pieza);
 			tablero[fila-1][columna-1] = pieza;			
-			tablero[fila-1][columna-1].asignarPosicion(columna,fila);
+			tablero[fila-1][columna-1].asignarPosicion(fila,columna);
+			tablero[fila-1][columna-1].sumarMovimiento();
 			
 		}catch(MovimientoNoValidoExcepcion e){
 			System.out.println(e);

@@ -30,6 +30,10 @@ public abstract class Pieza {
         this.columna = columna;
     }
 
+    public void sumarMovimiento(){
+        this.numeroMovimientos++;
+    }
+
     public String obtenerNombre(){
         return nombre;
     }
