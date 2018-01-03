@@ -54,6 +54,10 @@ public abstract class Pieza {
     	return numeroMovimientos ;
     }
 
+    public boolean validarCoordenadas(int fila,int columna){
+        return this.fila==fila && this.columna==columna;
+    }
+
    	public abstract void validarMovimiento(int fila,int columna, Tablero tablero) throws MovimientoNoValidoExcepcion;
 
    	/**
@@ -70,12 +74,15 @@ public abstract class Pieza {
         }
     }
     
-
     @Override
-    public String toString() {
+    public String toString(){
         if(this==null) 
             return " ";
         else
             return (numeroJugador==1) ? String.valueOf(nombre.charAt(0)) : String.valueOf(nombre.charAt(0)).toLowerCase();
+    }
+
+    public boolean equals(Pieza pieza){
+        return this.nombre==pieza.obtenerNombre() && this.numeroJugador==pieza.obtenerNumeroJugador() && this.fila==pieza.obtenerFila() && this.columna==pieza.obtenerColumna() && this.numeroMovimientos==this.obtenerNumeroMovimientos();
     }
 }

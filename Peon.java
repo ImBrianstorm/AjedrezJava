@@ -4,8 +4,24 @@ public class Peon extends Pieza{
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
-		if(columna!=this.obtenerColumna()){
-			throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion");
+	
+		if(columna!=this.obtenerColumna()){//Agregar que puedes cambiar columna solo si es para eliminar
+			if(this.obtenerNumeroJugador()==1){
+				if((fila==this.obtenerFila()-1&&columna==this.obtenerColumna()-1)&&(tablero.obtenerPieza(fila,columna)==null))
+					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza 1");
+				else if((fila==this.obtenerFila()-1&&columna==this.obtenerColumna()+1)&&(tablero.obtenerPieza(fila,columna)==null))
+					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza 2");
+				else if(!(fila==this.obtenerFila()-1&&columna==this.obtenerColumna()-1)&&!(fila==this.obtenerFila()-1&&columna==this.obtenerColumna()+1))
+					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion");
+			}
+			else{
+				if((fila==this.obtenerFila()+1&&columna==this.obtenerColumna()-1)&&(tablero.obtenerPieza(fila,columna)==null))
+					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza 1");
+				else if((fila==this.obtenerFila()+1&&columna==this.obtenerColumna()+1)&&(tablero.obtenerPieza(fila,columna)==null))
+					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza 2");
+				else if(!(fila==this.obtenerFila()+1&&columna==this.obtenerColumna()-1)&&!(fila==this.obtenerFila()+1&&columna==this.obtenerColumna()+1))
+					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion");
+			}
 		}
 		else
 			if(this.obtenerNumeroJugador()==1){
@@ -34,4 +50,22 @@ public class Peon extends Pieza{
 			}
 
 	}
+
+	@Override
+	/**
+     *
+     * @param piezaEliminada
+     * @throws EliminacionInvalidaExcepcion
+     */
+    public void validarEliminar(Pieza piezaEliminada) throws EliminacionInvalidaExcepcion{
+    	if(piezaEliminada==null){
+            throw new EliminacionInvalidaExcepcion("No puedes eliminar una pieza que no existe");
+        }
+        else if(this.obtenerNumeroJugador()==piezaEliminada.obtenerNumeroJugador()){
+            throw new EliminacionInvalidaExcepcion("No puedes eliminar esta pieza porque es tuya.");
+        }
+        else if(piezaEliminada.obtenerColumna()==this.obtenerColumna()){
+        	throw new EliminacionInvalidaExcepcion("Los peones no pueden eliminar verticalmente");
+        }
+    }
 }

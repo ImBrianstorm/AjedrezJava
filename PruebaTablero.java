@@ -7,9 +7,7 @@ public class PruebaTablero{
 		System.out.println("\n\n" + prueba.toString());
 		prueba.moverPieza(prueba.obtenerPieza(4,2),5,2);
 		System.out.println("\n\n" + prueba.toString());
-		
-
-		
+		//System.out.println();		
 	}
 }
 
