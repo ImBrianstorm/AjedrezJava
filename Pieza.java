@@ -7,7 +7,7 @@ public abstract class Pieza {
     private int numeroJugador;
     private int fila;
     private int columna;
-    private static int numeroMovimientos;
+    private int numeroMovimientos;
 
     public Pieza(String nombre,int numeroJugador,int fila,int columna){
         this.nombre = nombre;

@@ -47,6 +47,7 @@ public class Tablero{
 			tablero[fila-1][columna-1] = pieza;			
 			tablero[fila-1][columna-1].asignarPosicion(fila,columna);
 			tablero[fila-1][columna-1].sumarMovimiento();
+
 			
 		}catch(MovimientoNoValidoExcepcion e){
 			System.out.println(e);
@@ -61,26 +62,74 @@ public class Tablero{
 
 	public String toString(){
         return "      A   B   C   D   E   F  \n" +
+           	   "    + — + — + — + — + — + — +\n" +
+           	   " 1  | " + this.piezasFilaToString1(1) +
+           	   "    + — + — + — + — + — + — +\n" +
+           	   " 2  | " + this.piezasFilaToString1(2) +
+           	   "    + — + — + — + — + — + — +\n" +
+           	   " 3  | " + this.piezasFilaToString1(3) +
+           	   "    + — + — + — + — + — + — +\n" +
+           	   " 4  | " + this.piezasFilaToString1(4) +
+           	   "    + — + — + — + — + — + — +\n" +
+           	   " 5  | " + this.piezasFilaToString1(5) +
                "    + — + — + — + — + — + — +\n" +
-               " 1  | " + this.piezasFilaToString(1) +
-               "    + — + — + — + — + — + — +\n" +
-               " 2  | " + this.piezasFilaToString(2) +
-               "    + — + — + — + — + — + — +\n" +
-               " 3  | " + this.piezasFilaToString(3) +
-               "    + — + — + — + — + — + — +\n" +
-               " 4  | " + this.piezasFilaToString(4) +
-               "    + — + — + — + — + — + — +\n" +
-               " 5  | " + this.piezasFilaToString(5) +
-               "    + — + — + — + — + — + — +\n" +
-               " 6  | " + this.piezasFilaToString(6) +
-               "    + — + — + — + — + — + — +";
+           	   " 6  | " + this.piezasFilaToString1(6) +
+         	   "    + — + — + — + — + — + — +";
+    }
+
+	public String toString(int numeroJugador){
+        if(numeroJugador==1)
+        	return "      A   B   C   D   E   F  \n" +
+               	   "    + — + — + — + — + — + — +\n" +
+               	   " 1  | " + this.piezasFilaToString1(1) +
+               	   "    + — + — + — + — + — + — +\n" +
+               	   " 2  | " + this.piezasFilaToString1(2) +
+               	   "    + — + — + — + — + — + — +\n" +
+               	   " 3  | " + this.piezasFilaToString1(3) +
+               	   "    + — + — + — + — + — + — +\n" +
+               	   " 4  | " + this.piezasFilaToString1(4) +
+               	   "    + — + — + — + — + — + — +\n" +
+               	   " 5  | " + this.piezasFilaToString1(5) +
+              	    "    + — + — + — + — + — + — +\n" +
+               	   " 6  | " + this.piezasFilaToString1(6) +
+               	   "    + — + — + — + — + — + — +";
+        else
+        	return "      F   E   D   C   B   A  \n" +
+				   "    + — + — + — + — + — + — +\n" +
+				   " 6  | " + this.piezasFilaToString2(6) +
+				   "    + — + — + — + — + — + — +\n" +
+				   " 5  | " + this.piezasFilaToString2(5) +
+				   "    + — + — + — + — + — + — +\n" +
+				   " 4  | " + this.piezasFilaToString2(4) +
+				   "    + — + — + — + — + — + — +\n" +
+				   " 3  | " + this.piezasFilaToString2(3) +
+				   "    + — + — + — + — + — + — +\n" +
+				   " 2  | " + this.piezasFilaToString2(2) +
+				   "    + — + — + — + — + — + — +\n" +
+				   " 1  | " + this.piezasFilaToString2(1) +
+				   "    + — + — + — + — + — + — +";
      }
 
-	private String piezasFilaToString(int fila){
+	private String piezasFilaToString1(int fila){
 	    String string = "";
 	    for(int i=0;i<=5;i++){
-	    	if(tablero[fila-1][i]==null) string+= "  | ";
-	    	else string += tablero[fila-1][i].toString() + " | ";
+	    	if(tablero[fila-1][i]==null) 
+	    		string+= "  | ";
+	    	else 
+	    		string += tablero[fila-1][i].toString() + " | ";
+	    } 
+	    string += "\n";
+
+	    return string;
+	}
+
+	private String piezasFilaToString2(int fila){
+	    String string = "";
+	    for(int i=5;i>=0;i--){
+	    	if(tablero[fila-1][i]==null) 
+	    		string+= "  | ";
+	    	else 
+	    		string += tablero[fila-1][i].toString() + " | ";
 	    } 
 	    string += "\n";
 
