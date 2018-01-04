@@ -4,8 +4,7 @@ public class Peon extends Pieza{
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
-	
-		if(columna!=this.obtenerColumna()){//Agregar que puedes cambiar columna solo si es para eliminar
+		if(columna!=this.obtenerColumna()){
 			if(this.obtenerNumeroJugador()==1){
 				if((fila==this.obtenerFila()-1&&columna==this.obtenerColumna()-1)&&(tablero.obtenerPieza(fila,columna)==null))
 					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza");
@@ -23,7 +22,7 @@ public class Peon extends Pieza{
 					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion");
 			}
 		}
-		else  //NO PUEDE SALTAR FICHAS
+		else
 			if(this.obtenerNumeroJugador()==1){
 				if(this.obtenerFila()<=fila)
 					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion");

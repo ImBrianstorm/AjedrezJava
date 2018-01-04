@@ -22,6 +22,10 @@ public class Tablero{
 		return tablero[fila-1][columna-1];
 	}
 
+	public void agregarPieza(Pieza pieza,int fila,int columna){
+		tablero[fila-1][columna-1] = pieza;
+	}
+
 	public void eliminarPieza(Pieza pieza,Pieza piezaEliminada) throws EliminacionInvalidaExcepcion{
 		try{
 			pieza.validarEliminar(piezaEliminada);
@@ -35,10 +39,25 @@ public class Tablero{
 		tablero[pieza.obtenerFila()-1][pieza.obtenerColumna()-1] = null;
 	}
 
+	private void enroque(Pieza rey, Pieza torre,int tipoEnroque){
+		if(tipoEnroque==1){
+			quitarPiezaTablero(torre);
+			agregarPieza(torre,rey.obtenerFila(),rey.obtenerColumna()-1);
+		}
+		else if(tipoEnroque==2){
+			quitarPiezaTablero(torre);
+			agregarPieza(torre,rey.obtenerFila(),rey.obtenerColumna()+1);
+		}
+	}
+
 
 	public void moverPieza(Pieza pieza,int fila,int columna){
 		try{
 			pieza.validarMovimiento(fila,columna,this);
+			if(pieza.esPosibleEnrocar()){
+				enroque(pieza,pieza.obtenerTorreAEnrocar(),pieza.obtenerTipoDeEnroque());
+				pieza.deshabilitarEnroque();
+			}
 			if(obtenerPieza(fila,columna) != null){
 				pieza.validarEliminar(obtenerPieza(fila,columna));
 				eliminarPieza(pieza,obtenerPieza(fila,columna));

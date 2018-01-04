@@ -5,7 +5,7 @@ public class Torre extends Pieza{
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
 		if(this.validarCoordenadas(fila,columna))
-			throw new MovimientoNoValidoExcepcion("No puedes desplazarte a tu torre en su misma posicion");
+			throw new MovimientoNoValidoExcepcion("No puedes desplazar a tu torre a su posicion actual");
 		else if(this.obtenerColumna()!=columna&&this.obtenerFila()!=fila)
 			throw new MovimientoNoValidoExcepcion("No puedes desplazar a tu torre a esta posicion");
 		else if(this.obtenerColumna()==columna){

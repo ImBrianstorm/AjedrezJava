@@ -8,6 +8,9 @@ public abstract class Pieza {
     private int fila;
     private int columna;
     private int numeroMovimientos;
+    private boolean enroque;
+    protected Torre torreEnroque;
+    protected int tipoEnroque;
 
     public Pieza(String nombre,int numeroJugador,int fila,int columna){
         this.nombre = nombre;
@@ -15,11 +18,33 @@ public abstract class Pieza {
         this.fila = fila;
         this.columna = columna;
         this.numeroMovimientos = 0;
+        this.enroque = false;
     }
 
     public void asignarNombre(String nombre){
         this.nombre = nombre ;
     }
+
+    public void habilitarEnroque(){
+        this.enroque=true;
+    }
+
+    public void deshabilitarEnroque(){
+        this.enroque=false;
+    }
+
+    public boolean esPosibleEnrocar(){
+        return enroque;
+    }
+
+    public Torre obtenerTorreAEnrocar(){
+        return torreEnroque;
+    }
+
+    public int obtenerTipoDeEnroque(){//1 largo 2 corto
+        return tipoEnroque;
+    }
+
 
     public void asignarNumeroJugador(int numeroJugador){
         this.numeroJugador = numeroJugador;
