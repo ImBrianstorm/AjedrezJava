@@ -68,26 +68,26 @@ public abstract class Tablero{
 	}
 
 	public String toString(){
-    	String tablero = lineaLetras();
-        for(int i=1;i<=numeroFilas;i++){
+    	String tablero = lineaLetras() + lineaDivisionInicial() + lineaPiezas(1);
+        for(int i=2;i<=numeroFilas;i++){
           tablero += lineaDivision();
           tablero += lineaPiezas(i);
         }
-    	return tablero + lineaDivision();
+    	return tablero + lineaDivisionFinal();
     }
 
     public String toString(int numeroJugador){
     	if(numeroJugador==1)
     		return toString();
     	else{
-    		String tablero = lineaLetrasReversa();
-        	for(int i=numeroFilas;i>=1;i--){
-          tablero += lineaDivision();
-          tablero += lineaPiezas(i);
+    		String tablero = lineaLetrasReversa() + lineaDivisionInicial() + lineaPiezas(numeroFilas);
+        	for(int i=numeroFilas-1;i>=1;i--){
+          		tablero += lineaDivision();
+          		tablero += lineaPiezas(i);
         }
-    	return tablero + lineaDivision();
+    	return tablero + lineaDivisionFinal();
     	}
-    }	
+    }
 
     private String lineaLetras(){
     	String string = "      ";
@@ -106,32 +106,51 @@ public abstract class Tablero{
     }
 
 	private String lineaPiezas(int fila){
-	    String string = " " + fila +"  | ";
+	    String string = " " + fila +"  ║ ";
 	    for(int i=0;i<numeroColumnas;i++){
 	    	if(tablero[fila-1][i]==null) 
-	    		string+= "  | ";
+	    		string+= "  ║ ";
 	    	else 
-	    		string += tablero[fila-1][i].toString() + " | ";
+	    		string += tablero[fila-1][i].toString() + " ║ ";
 	    } 
 	    return string +"\n";
 	}
 
 	private String lineaPiezasReversa(int fila){
-	    String string = " " + fila +"  | ";
+	    String string = " " + fila +"  ║ ";
 	    for(int i=numeroColumnas-1;i>=0;i--){
 	    	if(tablero[fila-1][i]==null) 
-	    		string+= "  | ";
+	    		string+= "  ║ ";
 	    	else 
-	    		string += tablero[fila-1][i].toString() + " | ";
+	    		string += tablero[fila-1][i].toString() + " ║ ";
 	    } 
         return string +"\n";
 	}
 
 	private String lineaDivision(){
 		String string = "    ";
-		for(int i=1;i<=numeroColumnas;i++){
-			string += "+ — ";
+		string += "╠═══";
+		for(int i=2;i<=numeroColumnas;i++){
+			string += "╬═══";
 		}
-		return string + "+\n";
+		return string + "╣\n";
 	}
+
+	private String lineaDivisionInicial(){
+    	String string = "    ";
+		string += "╔═══";
+		for(int i=2;i<=numeroColumnas;i++){
+			string += "╦═══";
+		}
+		return string + "╗\n";
+    }
+
+    private String lineaDivisionFinal(){
+    	String string = "    ";
+		string += "╚═══";
+		for(int i=2;i<=numeroColumnas;i++){
+			string += "╩═══";
+		}
+		return string + "╝\n";
+    }
 }

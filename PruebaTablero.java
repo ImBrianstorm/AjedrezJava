@@ -1,16 +1,12 @@
 public class PruebaTablero{
 	public static void main(String[] args){
 		try{
-			Juego prueba = new Juego();
+			JuegoDeExtincion prueba = new JuegoDeExtincion();
 			prueba.iniciarJuego();
 			System.out.println("\n\n" + prueba.toString());
-			prueba.moverPieza(prueba.obtenerPieza(7,6),5,6);
-			prueba.moverPieza(prueba.obtenerPieza(5,6),4,6);
-			System.out.println("\n\n" + prueba.toString());
-			prueba.moverPieza(prueba.obtenerPieza(2,7),4,7);
-			System.out.println("\n\n" + prueba.toString());
-			prueba.moverPieza(prueba.obtenerPieza(4,9),3,7);
-			System.out.println("\n" + prueba.toString());
+			prueba.moverPieza(prueba.obtenerPieza(1,5),1,3);
+			System.out.println("\n" + prueba.toString(2));
+
 		}
 		catch(Exception e){
 			System.out.println(e);
