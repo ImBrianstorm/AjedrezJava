@@ -2,7 +2,7 @@
  *
  * @author Mauricio Chávez
  */
-public class Tablero{
+public abstract class Tablero{
 
 	private Pieza[][] tablero;
 	private int numeroFilas;
@@ -14,7 +14,9 @@ public class Tablero{
 		this.numeroColumnas = 6;
 	}
 
-	public Tablero(int filas,int columnas){
+	public Tablero(int filas,int columnas) throws TamañoNoSoportadoExcepcion{
+		if(columnas>26)
+			throw new TamañoNoSoportadoExcepcion("El tablero no soporta más de 26 columnas");
 		this.tablero = new Pieza[filas][columnas];
 		this.numeroFilas = filas;
 		this.numeroColumnas = columnas;
@@ -44,6 +46,8 @@ public class Tablero{
 		tablero[fila-1][columna-1] = pieza;
 	}
 
+	public abstract void moverPieza(Pieza pieza,int fila,int columna);
+
 	public void eliminarPieza(Pieza pieza,Pieza piezaEliminada) throws EliminacionInvalidaExcepcion{
 		try{
 			pieza.validarEliminar(piezaEliminada);
@@ -58,79 +62,70 @@ public class Tablero{
 	}
 
 	public String toString(){
-        return "      A   B   C   D   E   F  \n" +
-           	   "    + — + — + — + — + — + — +\n" +
-           	   " 1  | " + this.piezasFilaToString1(1) +
-           	   "    + — + — + — + — + — + — +\n" +
-           	   " 2  | " + this.piezasFilaToString1(2) +
-           	   "    + — + — + — + — + — + — +\n" +
-           	   " 3  | " + this.piezasFilaToString1(3) +
-           	   "    + — + — + — + — + — + — +\n" +
-           	   " 4  | " + this.piezasFilaToString1(4) +
-           	   "    + — + — + — + — + — + — +\n" +
-           	   " 5  | " + this.piezasFilaToString1(5) +
-               "    + — + — + — + — + — + — +\n" +
-           	   " 6  | " + this.piezasFilaToString1(6) +
-         	   "    + — + — + — + — + — + — +";
+    	String tablero = lineaLetras();
+        for(int i=1;i<=numeroFilas;i++){
+          tablero += lineaDivision();
+          tablero += lineaPiezas(i);
+        }
+    	return tablero + lineaDivision();
     }
 
-	public String toString(int numeroJugador){
-        if(numeroJugador==1)
-        	return "      A   B   C   D   E   F  \n" +
-               	   "    + — + — + — + — + — + — +\n" +
-               	   " 1  | " + this.piezasFilaToString1(1) +
-               	   "    + — + — + — + — + — + — +\n" +
-               	   " 2  | " + this.piezasFilaToString1(2) +
-               	   "    + — + — + — + — + — + — +\n" +
-               	   " 3  | " + this.piezasFilaToString1(3) +
-               	   "    + — + — + — + — + — + — +\n" +
-               	   " 4  | " + this.piezasFilaToString1(4) +
-               	   "    + — + — + — + — + — + — +\n" +
-               	   " 5  | " + this.piezasFilaToString1(5) +
-              	    "    + — + — + — + — + — + — +\n" +
-               	   " 6  | " + this.piezasFilaToString1(6) +
-               	   "    + — + — + — + — + — + — +";
-        else
-        	return "      F   E   D   C   B   A  \n" +
-				   "    + — + — + — + — + — + — +\n" +
-				   " 6  | " + this.piezasFilaToString2(6) +
-				   "    + — + — + — + — + — + — +\n" +
-				   " 5  | " + this.piezasFilaToString2(5) +
-				   "    + — + — + — + — + — + — +\n" +
-				   " 4  | " + this.piezasFilaToString2(4) +
-				   "    + — + — + — + — + — + — +\n" +
-				   " 3  | " + this.piezasFilaToString2(3) +
-				   "    + — + — + — + — + — + — +\n" +
-				   " 2  | " + this.piezasFilaToString2(2) +
-				   "    + — + — + — + — + — + — +\n" +
-				   " 1  | " + this.piezasFilaToString2(1) +
-				   "    + — + — + — + — + — + — +";
-     }
+    public String toString(int numeroJugador){
+    	if(numeroJugador==1)
+    		return toString();
+    	else{
+    		String tablero = lineaLetrasReversa();
+        	for(int i=numeroFilas;i>=1;i--){
+          tablero += lineaDivision();
+          tablero += lineaPiezas(i);
+        }
+    	return tablero + lineaDivision();
+    	}
+    }	
 
-	private String piezasFilaToString1(int fila){
-	    String string = "";
-	    for(int i=0;i<=5;i++){
+    private String lineaLetras(){
+    	String string = "      ";
+    	for(int i=65;i<=64+numeroColumnas;i++){
+    		string += (char) i + "   ";
+    	}
+    	return string + "\n";
+    }
+
+    private String lineaLetrasReversa(){
+    	String string = "      ";
+    	for(int i=64+numeroColumnas;i>=65;i--){
+    		string += (char) i + "   ";
+    	}
+    	return string + "\n";
+    }
+
+	private String lineaPiezas(int fila){
+	    String string = " " + fila +"  | ";
+	    for(int i=0;i<numeroColumnas;i++){
 	    	if(tablero[fila-1][i]==null) 
 	    		string+= "  | ";
 	    	else 
 	    		string += tablero[fila-1][i].toString() + " | ";
 	    } 
-	    string += "\n";
-
-	    return string;
+	    return string +"\n";
 	}
 
-	private String piezasFilaToString2(int fila){
-	    String string = "";
-	    for(int i=5;i>=0;i--){
+	private String lineaPiezasReversa(int fila){
+	    String string = " " + fila +"  | ";
+	    for(int i=numeroColumnas-1;i>=0;i--){
 	    	if(tablero[fila-1][i]==null) 
 	    		string+= "  | ";
 	    	else 
 	    		string += tablero[fila-1][i].toString() + " | ";
 	    } 
-	    string += "\n";
-
-	    return string;
+        return string +"\n";
 	}
 
+	private String lineaDivision(){
+		String string = "    ";
+		for(int i=1;i<=numeroColumnas;i++){
+			string += "+ — ";
+		}
+		return string + "+\n";
+	}
 }
