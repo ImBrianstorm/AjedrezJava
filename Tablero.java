@@ -31,7 +31,13 @@ public abstract class Tablero{
 	}
 
 	public Pieza obtenerPieza(int fila,int columna){
-		return tablero[fila-1][columna-1];
+		Pieza p = null;
+		try{
+			p = tablero[fila-1][columna-1];
+		}catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("No puedes obtener una pieza fuera del tablero");
+		}
+		return p;
 	}
 
 	public int obtenerNumeroFilas(){

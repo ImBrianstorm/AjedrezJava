@@ -6,7 +6,7 @@ public class Dama extends Pieza{
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
 		if(this.validarCoordenadas(fila,columna))
 			throw new MovimientoNoValidoExcepcion("No puedes desplazar a tu dama a su posicion actual");
-		else if(this.obtenerColumna()!=columna&&this.obtenerFila()!=fila){//FILA Y COLUMNA DIFERENTES
+		else if(this.obtenerColumna()!=columna&&this.obtenerFila()!=fila){
 			if(Math.pow(this.obtenerFila()-fila,2)!=Math.pow(this.obtenerColumna()-columna,2))
 				throw new MovimientoNoValidoExcepcion("No puedes desplazar a tu dama a esta posicion");
 			else if(Math.pow(this.obtenerFila()-fila,2)==Math.pow(this.obtenerColumna()-columna,2)){

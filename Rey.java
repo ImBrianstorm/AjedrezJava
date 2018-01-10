@@ -68,13 +68,13 @@ public class Rey extends Pieza{
 				}
 				else{
 					if(tablero.obtenerPieza(this.obtenerFila(),6).obtenerNombre().equals("Torre")&&tablero.obtenerPieza(this.obtenerFila(),6).obtenerNumeroJugador()==this.obtenerNumeroJugador()){
-						for(int i=this.obtenerColumna()+1;i<6;i++){//SOLO FUNCIONARÁ EN TABLERO 6x6
+						for(int i=this.obtenerColumna()+1;i<tablero.obtenerNumeroColumnas();i++){
 							if(tablero.obtenerPieza(fila,i)!=null){
 								throw new MovimientoNoValidoExcepcion("El enroque no es posible porque hay una pieza entre tu torre y tu rey");
 							}
 						}
 						this.habilitarEnroque();
-						torreEnroque = (Torre) tablero.obtenerPieza(this.obtenerFila(),6);
+						torreEnroque = (Torre) tablero.obtenerPieza(this.obtenerFila(),tablero.obtenerNumeroColumnas());
 						tipoEnroque = 2;
 					}
 					else
