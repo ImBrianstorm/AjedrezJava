@@ -1,7 +1,6 @@
 public class Juego extends Tablero{
-	
 	public Juego(){
-		super();
+		super(6,6);
 	}
 
 	private Pieza[][] tablero = super.obtenerArregloPiezas();
@@ -28,5 +27,55 @@ public class Juego extends Tablero{
 		tablero[0][5] = new Torre(2,1,6);
 
 		for(int i=0;i<=5;i++) tablero[1][i] = new Peon(2,2,i+1);
+	}
+
+	private void enroque(Pieza rey, Pieza torre,int tipoEnroque){
+		if(tipoEnroque==1){
+			super.quitarPiezaTablero(torre);
+			super.agregarPieza(torre,rey.obtenerFila(),rey.obtenerColumna()-1);
+		}
+		else if(tipoEnroque==2){
+			super.quitarPiezaTablero(torre);
+			super.agregarPieza(torre,rey.obtenerFila(),rey.obtenerColumna()+1);
+		}
+	}
+
+	private void capturaAlPaso(Pieza peonAtacado){
+		super.quitarPiezaTablero(peonAtacado);
+	}
+
+
+	public void moverPieza(Pieza pieza,int fila,int columna){
+		try{
+			pieza.validarMovimiento(fila,columna,this);
+			if(pieza.esPosibleEnrocar()){
+				enroque(pieza,pieza.obtenerTorreAEnrocar(),pieza.obtenerTipoDeEnroque());
+				pieza.deshabilitarEnroque();
+				pieza.eliminarTorreAEnrocar();
+			}
+			if(pieza.esPosibleCapturaAlPaso()){
+				capturaAlPaso(pieza.obtenerPeonEliminado());
+				pieza.deshabilitarCapturaAlPaso();
+				pieza.eliminarPeonEliminado();
+			}
+			if(obtenerPieza(fila,columna) != null){
+				pieza.validarEliminar(obtenerPieza(fila,columna));
+				super.eliminarPieza(pieza,obtenerPieza(fila,columna));
+			}
+			super.quitarPiezaTablero(pieza);
+			tablero[fila-1][columna-1] = pieza;			
+			tablero[fila-1][columna-1].asignarPosicion(fila,columna);
+			tablero[fila-1][columna-1].sumarMovimiento();
+
+			
+		}catch(MovimientoNoValidoExcepcion e){
+			System.out.println(e);
+		}catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("Movimiento no permitido: está fuera del tablero");
+		}catch(NullPointerException e){
+			System.out.println("Movimiento no permitido: no puedes mover una pieza que no existe");
+		}catch(EliminacionInvalidaExcepcion e){
+			System.out.println(e);
+		}
 	}
 }

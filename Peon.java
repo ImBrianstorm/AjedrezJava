@@ -6,18 +6,42 @@ public class Peon extends Pieza{
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
 		if(columna!=this.obtenerColumna()){
 			if(this.obtenerNumeroJugador()==1){
-				if((fila==this.obtenerFila()-1&&columna==this.obtenerColumna()-1)&&(tablero.obtenerPieza(fila,columna)==null))
-					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza");
-				else if((fila==this.obtenerFila()-1&&columna==this.obtenerColumna()+1)&&(tablero.obtenerPieza(fila,columna)==null))
-					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza");
-				else if(!(fila==this.obtenerFila()-1&&columna==this.obtenerColumna()-1)&&!(fila==this.obtenerFila()-1&&columna==this.obtenerColumna()+1))
+				if((fila==this.obtenerFila()-1&&columna==this.obtenerColumna()-1)&&(tablero.obtenerPieza(fila,columna)==null)){//MOVIMIENTO ARRIBA IZQUIERDA
+					if(tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()-1)!=null&&tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()-1).obtenerNumeroJugador()!=this.obtenerNumeroJugador()&&tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()-1).obtenerNumeroMovimientos()==1&&this.obtenerFila()==4){
+						this.habilitarCapturaAlPaso();
+						peonEliminado = (Peon) tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()-1);
+					}
+					else
+						throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza");
+				}
+				else if((fila==this.obtenerFila()-1&&columna==this.obtenerColumna()+1)&&(tablero.obtenerPieza(fila,columna)==null)){
+					if(tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()+1)!=null&&tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()+1).obtenerNumeroJugador()!=this.obtenerNumeroJugador()&&tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()+1).obtenerNumeroMovimientos()==1&&this.obtenerFila()==4){
+						this.habilitarCapturaAlPaso();
+						peonEliminado = (Peon) tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()+1);
+					}
+					else
+						throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza");
+				}
+				else if(!(fila==this.obtenerFila()-1&&columna==this.obtenerColumna()-1)&&!(fila==this.obtenerFila()-1&&columna==this.obtenerColumna()+1)) //MOVIMIENTOS EN DIAGONAL INVALIDOS a menos que sea diagonal mas uno
 					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion");
 			}
 			else{
-				if((fila==this.obtenerFila()+1&&columna==this.obtenerColumna()-1)&&(tablero.obtenerPieza(fila,columna)==null))
+				if((fila==this.obtenerFila()+1&&columna==this.obtenerColumna()-1)&&(tablero.obtenerPieza(fila,columna)==null)){
+					if(tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()-1)!=null&&tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()-1).obtenerNumeroJugador()!=this.obtenerNumeroJugador()&&tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()-1).obtenerNumeroMovimientos()==1&&this.obtenerFila()==tablero.obtenerNumeroFilas()-3){
+						this.habilitarCapturaAlPaso();
+						peonEliminado = (Peon) tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()-1);
+					}
+				else
 					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza");
-				else if((fila==this.obtenerFila()+1&&columna==this.obtenerColumna()+1)&&(tablero.obtenerPieza(fila,columna)==null))
-					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza");
+				}
+				else if((fila==this.obtenerFila()+1&&columna==this.obtenerColumna()+1)&&(tablero.obtenerPieza(fila,columna)==null)){
+					if(tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()+1)!=null&&tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()+1).obtenerNumeroJugador()!=this.obtenerNumeroJugador()&&tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()+1).obtenerNumeroMovimientos()==1&&this.obtenerFila()==tablero.obtenerNumeroFilas()-3){
+						this.habilitarCapturaAlPaso();
+						peonEliminado = (Peon) tablero.obtenerPieza(this.obtenerFila(),this.obtenerColumna()+1);
+					}
+					else
+						throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion a menos que sea para eliminar a una pieza");
+				}
 				else if(!(fila==this.obtenerFila()+1&&columna==this.obtenerColumna()-1)&&!(fila==this.obtenerFila()+1&&columna==this.obtenerColumna()+1))
 					throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion");
 			}
@@ -51,7 +75,6 @@ public class Peon extends Pieza{
 						throw new MovimientoNoValidoExcepcion("No puedes mover a tu peon a esta posicion");
 				}
 			}
-
 	}
 
 	@Override

@@ -5,9 +5,19 @@
 public class Tablero{
 
 	private Pieza[][] tablero;
+	private int numeroFilas;
+	private int numeroColumnas;
 
 	public Tablero(){
-		tablero = new Pieza[6][6];
+		this.tablero = new Pieza[8][8];
+		this.numeroFilas = 6;
+		this.numeroColumnas = 6;
+	}
+
+	public Tablero(int filas,int columnas){
+		this.tablero = new Pieza[filas][columnas];
+		this.numeroFilas = filas;
+		this.numeroColumnas = columnas;
 	}
 
 	public Tablero(Pieza[][] arregloPiezas){
@@ -20,6 +30,14 @@ public class Tablero{
 
 	public Pieza obtenerPieza(int fila,int columna){
 		return tablero[fila-1][columna-1];
+	}
+
+	public int obtenerNumeroFilas(){
+		return numeroFilas;
+	}
+
+	public int obtenerNumeroColumnas(){
+		return numeroColumnas;
 	}
 
 	public void agregarPieza(Pieza pieza,int fila,int columna){
@@ -37,46 +55,6 @@ public class Tablero{
 
 	public void quitarPiezaTablero(Pieza pieza){
 		tablero[pieza.obtenerFila()-1][pieza.obtenerColumna()-1] = null;
-	}
-
-	private void enroque(Pieza rey, Pieza torre,int tipoEnroque){
-		if(tipoEnroque==1){
-			quitarPiezaTablero(torre);
-			agregarPieza(torre,rey.obtenerFila(),rey.obtenerColumna()-1);
-		}
-		else if(tipoEnroque==2){
-			quitarPiezaTablero(torre);
-			agregarPieza(torre,rey.obtenerFila(),rey.obtenerColumna()+1);
-		}
-	}
-
-
-	public void moverPieza(Pieza pieza,int fila,int columna){
-		try{
-			pieza.validarMovimiento(fila,columna,this);
-			if(pieza.esPosibleEnrocar()){
-				enroque(pieza,pieza.obtenerTorreAEnrocar(),pieza.obtenerTipoDeEnroque());
-				pieza.deshabilitarEnroque();
-			}
-			if(obtenerPieza(fila,columna) != null){
-				pieza.validarEliminar(obtenerPieza(fila,columna));
-				eliminarPieza(pieza,obtenerPieza(fila,columna));
-			}
-			quitarPiezaTablero(pieza);
-			tablero[fila-1][columna-1] = pieza;			
-			tablero[fila-1][columna-1].asignarPosicion(fila,columna);
-			tablero[fila-1][columna-1].sumarMovimiento();
-
-			
-		}catch(MovimientoNoValidoExcepcion e){
-			System.out.println(e);
-		}catch(ArrayIndexOutOfBoundsException e){
-			System.out.println("Movimiento no permitido: está fuera del tablero");
-		}catch(NullPointerException e){
-			System.out.println("Movimiento no permitido: no puedes mover una pieza que no existe");
-		}catch(EliminacionInvalidaExcepcion e){
-			System.out.println(e);
-		}
 	}
 
 	public String toString(){

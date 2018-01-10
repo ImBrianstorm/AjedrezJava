@@ -9,7 +9,9 @@ public abstract class Pieza {
     private int columna;
     private int numeroMovimientos;
     private boolean enroque;
+    private boolean capturaAlPaso;
     protected Torre torreEnroque;
+    protected Peon peonEliminado;
     protected int tipoEnroque;
 
     public Pieza(String nombre,int numeroJugador,int fila,int columna){
@@ -19,6 +21,7 @@ public abstract class Pieza {
         this.columna = columna;
         this.numeroMovimientos = 0;
         this.enroque = false;
+        this.capturaAlPaso = false;
     }
 
     public void asignarNombre(String nombre){
@@ -33,16 +36,40 @@ public abstract class Pieza {
         this.enroque=false;
     }
 
+    public void habilitarCapturaAlPaso(){
+        this.capturaAlPaso=true;
+    }
+
+    public void deshabilitarCapturaAlPaso(){
+        this.capturaAlPaso=false;
+    }
+
     public boolean esPosibleEnrocar(){
         return enroque;
+    }
+
+    public boolean esPosibleCapturaAlPaso(){
+        return capturaAlPaso;
     }
 
     public Torre obtenerTorreAEnrocar(){
         return torreEnroque;
     }
 
+    public void eliminarTorreAEnrocar(){
+        torreEnroque = null;
+    }
+
     public int obtenerTipoDeEnroque(){//1 largo 2 corto
         return tipoEnroque;
+    }
+
+    public Peon obtenerPeonEliminado(){
+        return peonEliminado;
+    }
+
+    public void eliminarPeonEliminado(){
+        peonEliminado = null;
     }
 
 
