@@ -1,6 +1,14 @@
+import java.util.Random;
+
 public class JuegoDeExtincion extends Tablero{
-	public JuegoDeExtincion() throws TamañoNoSoportadoExcepcion{
+
+	private int tipoDeJuego;
+	private int turnos;
+	private int numeroJugador;
+
+	public JuegoDeExtincion(int tipoDeJuego) throws TamañoNoSoportadoExcepcion{
 		super(6,6);
+		this.tipoDeJuego = tipoDeJuego;
 	}
 
 	private Pieza[][] tablero = super.obtenerArregloPiezas();
@@ -44,7 +52,7 @@ public class JuegoDeExtincion extends Tablero{
 		super.quitarPiezaTablero(peonAtacado);
 	}
 
-
+	@Override
 	public void moverPieza(Pieza pieza,int fila,int columna){
 		try{
 			pieza.validarMovimiento(fila,columna,this);
@@ -66,8 +74,6 @@ public class JuegoDeExtincion extends Tablero{
 			tablero[fila-1][columna-1] = pieza;			
 			tablero[fila-1][columna-1].asignarPosicion(fila,columna);
 			tablero[fila-1][columna-1].sumarMovimiento();
-
-			
 		}catch(MovimientoNoValidoExcepcion e){
 			System.out.println(e);
 		}catch(ArrayIndexOutOfBoundsException e){
@@ -78,4 +84,8 @@ public class JuegoDeExtincion extends Tablero{
 			System.out.println(e);
 		}
 	}
+
+	public void juegoHumano(){
+	}
+
 }

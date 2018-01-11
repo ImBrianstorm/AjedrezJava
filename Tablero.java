@@ -2,7 +2,7 @@
  *
  * @author Mauricio Chávez
  */
-public abstract class Tablero{
+public class Tablero{
 
 	private Pieza[][] tablero;
 	private int numeroFilas;
@@ -10,8 +10,8 @@ public abstract class Tablero{
 
 	public Tablero(){
 		this.tablero = new Pieza[8][8];
-		this.numeroFilas = 6;
-		this.numeroColumnas = 6;
+		this.numeroFilas = 8;
+		this.numeroColumnas = 8;
 	}
 
 	public Tablero(int filas,int columnas) throws TamañoNoSoportadoExcepcion{
@@ -22,7 +22,9 @@ public abstract class Tablero{
 		this.numeroColumnas = columnas;
 	}
 
-	public Tablero(Pieza[][] arregloPiezas){
+	public Tablero(Pieza[][] arregloPiezas) throws TamañoNoSoportadoExcepcion{
+		if(tablero.length>26)
+			throw new TamañoNoSoportadoExcepcion("El tablero no soporta más de 26 columnas");
 		arregloPiezas = tablero;
 	}
 
@@ -52,7 +54,27 @@ public abstract class Tablero{
 		tablero[fila-1][columna-1] = pieza;
 	}
 
-	public abstract void moverPieza(Pieza pieza,int fila,int columna);
+	public void moverPieza(Pieza pieza,int fila,int columna){
+		try{
+			pieza.validarMovimiento(fila,columna,this);
+			if(obtenerPieza(fila,columna) != null){
+				pieza.validarEliminar(obtenerPieza(fila,columna));
+				eliminarPieza(pieza,obtenerPieza(fila,columna));
+			}
+			quitarPiezaTablero(pieza);
+			tablero[fila-1][columna-1] = pieza;			
+			tablero[fila-1][columna-1].asignarPosicion(fila,columna);
+			tablero[fila-1][columna-1].sumarMovimiento();
+		}catch(MovimientoNoValidoExcepcion e){
+			System.out.println(e);
+		}catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("Movimiento no permitido: está fuera del tablero");
+		}catch(NullPointerException e){
+			System.out.println("Movimiento no permitido: no puedes mover una pieza que no existe");
+		}catch(EliminacionInvalidaExcepcion e){
+			System.out.println(e);
+		}
+	}
 
 	public void eliminarPieza(Pieza pieza,Pieza piezaEliminada) throws EliminacionInvalidaExcepcion{
 		try{

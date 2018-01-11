@@ -2,10 +2,9 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 
 public class Main{
-	public static void main(String[] pps){
+	public static void main(String[] args) throws TamañoNoSoportadoExcepcion{
 		Scanner io = new Scanner(System.in);
-		int opcion;
-
+		int opcion = -1;
 	
 		System.out.println("Bienvenido, ¿jugarás contra otro jugador o contra la máquina?");
 		System.out.println("1. Humano");
@@ -18,11 +17,10 @@ public class Main{
 			System.out.println("Hasta luego.");
 			System.exit(0);
 		}
-
-		if(opcion==1){
-			Juego humano = new Juego(0);
+		if(opcion==0){
+			JuegoDeExtincion humano = new JuegoDeExtincion(0);
 		}else{
-			Juego computadora = new Juego(1);
+			JuegoDeExtincion computadora = new JuegoDeExtincion(1);		
 		}
 	}
 }
