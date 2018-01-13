@@ -4,7 +4,7 @@
  */
 public class Tablero{
 
-	private Pieza[][] tablero;
+	protected Pieza[][] tablero;
 	private int numeroFilas;
 	private int numeroColumnas;
 
@@ -52,37 +52,6 @@ public class Tablero{
 
 	public void agregarPieza(Pieza pieza,int fila,int columna){
 		tablero[fila-1][columna-1] = pieza;
-	}
-
-	public void moverPieza(Pieza pieza,int fila,int columna){
-		try{
-			pieza.validarMovimiento(fila,columna,this);
-			if(obtenerPieza(fila,columna) != null){
-				pieza.validarEliminar(obtenerPieza(fila,columna));
-				eliminarPieza(pieza,obtenerPieza(fila,columna));
-			}
-			quitarPiezaTablero(pieza);
-			tablero[fila-1][columna-1] = pieza;			
-			tablero[fila-1][columna-1].asignarPosicion(fila,columna);
-			tablero[fila-1][columna-1].sumarMovimiento();
-		}catch(MovimientoNoValidoExcepcion e){
-			System.out.println(e);
-		}catch(ArrayIndexOutOfBoundsException e){
-			System.out.println("Movimiento no permitido: está fuera del tablero");
-		}catch(NullPointerException e){
-			System.out.println("Movimiento no permitido: no puedes mover una pieza que no existe");
-		}catch(EliminacionInvalidaExcepcion e){
-			System.out.println(e);
-		}
-	}
-
-	public void eliminarPieza(Pieza pieza,Pieza piezaEliminada) throws EliminacionInvalidaExcepcion{
-		try{
-			pieza.validarEliminar(piezaEliminada);
-			tablero[piezaEliminada.obtenerFila()-1][piezaEliminada.obtenerColumna()-1] = null;
-		}catch(EliminacionInvalidaExcepcion e){
-			System.out.println(e);
-		}
 	}
 
 	public void quitarPiezaTablero(Pieza pieza){

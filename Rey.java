@@ -84,5 +84,3 @@ public class Rey extends Pieza{
 		}
 	}
 }
-
-//TOMA PEON AL PASO :C

@@ -2,16 +2,27 @@ import java.util.Random;
 
 public class JuegoDeExtincion extends Tablero{
 
-	private int tipoDeJuego;
+	private int tipo;
 	private int turnos;
-	private int numeroJugador;
+	private Jugador primerJugador;
+	private Jugador segundoJugador;
+	private boolean noEsPosibleMover;
 
-	public JuegoDeExtincion(int tipoDeJuego) throws TamañoNoSoportadoExcepcion{
+	public JuegoDeExtincion(int tipo, String nombrePrimerJugador, String nombreSegundoJugador) throws TamañoNoSoportadoExcepcion,TipoNoValidoExcepcion{
 		super(6,6);
-		this.tipoDeJuego = tipoDeJuego;
+		this.turnos = 0;
+		this.tipo = tipo;
+		if(tipo==1){
+			primerJugador = new Jugador(1,1,nombrePrimerJugador);
+			segundoJugador = new Jugador(1,2,nombreSegundoJugador);
+		}
+		else if(tipo==2){
+			primerJugador = new Jugador(1,1,nombrePrimerJugador);
+			segundoJugador = new Jugador(2,2,"IA");
+		}
+		if(tipo<1||tipo>2)
+			throw new TipoNoValidoExcepcion("Este constructor solo admite tipo 1 (humano) o tipo 2 (computadora");
 	}
-
-	private Pieza[][] tablero = super.obtenerArregloPiezas();
 
 	public void iniciarJuego(){
 		
@@ -26,7 +37,6 @@ public class JuegoDeExtincion extends Tablero{
 		for(int i=0;i<=5;i++) tablero[4][i] = new Peon(1,5,i+1);
 		
 		//JUGADOR 2
-
 		tablero[0][0] = new Torre(2,1,1);
 		tablero[0][1] = new Caballo(2,1,2);
 		tablero[0][2] = new Dama(2,1,3);
@@ -35,6 +45,19 @@ public class JuegoDeExtincion extends Tablero{
 		tablero[0][5] = new Torre(2,1,6);
 
 		for(int i=0;i<=5;i++) tablero[1][i] = new Peon(2,2,i+1);
+	}
+
+	public void capturarPieza(Pieza pieza,Pieza piezaEliminada,int tipoJugador) throws TipoNoValidoExcepcion,EliminacionInvalidaExcepcion{
+		if(tipoJugador<1&&tipoJugador>2)
+			throw new TipoNoValidoExcepcion("Este constructor solo admite tipo 1 (humano) o tipo 2 (computadora");
+		try{
+			pieza.validarEliminar(piezaEliminada);
+			tablero[piezaEliminada.obtenerFila()-1][piezaEliminada.obtenerColumna()-1] = null; 
+		}catch(EliminacionInvalidaExcepcion e){
+			if(tipoJugador==1)
+				System.out.println(e);
+			throw new EliminacionInvalidaExcepcion();
+		}	
 	}
 
 	private void enroque(Pieza rey, Pieza torre,int tipoEnroque){
@@ -52,8 +75,10 @@ public class JuegoDeExtincion extends Tablero{
 		super.quitarPiezaTablero(peonAtacado);
 	}
 
-	@Override
-	public void moverPieza(Pieza pieza,int fila,int columna){
+	public void moverPieza(Pieza pieza,int fila,int columna,int tipoJugador) throws MovimientoNoValidoExcepcion,EliminacionInvalidaExcepcion,TipoNoValidoExcepcion{
+		if(tipoJugador<1&&tipoJugador>2)
+			throw new TipoNoValidoExcepcion("Este constructor solo admite tipo 1 (humano) o tipo 2 (computadora");
+		noEsPosibleMover = false;
 		try{
 			pieza.validarMovimiento(fila,columna,this);
 			if(pieza.esPosibleEnrocar()){
@@ -66,26 +91,118 @@ public class JuegoDeExtincion extends Tablero{
 				pieza.deshabilitarCapturaAlPaso();
 				pieza.eliminarPeonEliminado();
 			}
-			if(obtenerPieza(fila,columna) != null){
-				pieza.validarEliminar(obtenerPieza(fila,columna));
-				super.eliminarPieza(pieza,obtenerPieza(fila,columna));
+			if(obtenerPieza(fila,columna)!=null){
+				capturarPieza(pieza,obtenerPieza(fila,columna),tipoJugador);				
 			}
 			super.quitarPiezaTablero(pieza);
 			tablero[fila-1][columna-1] = pieza;			
 			tablero[fila-1][columna-1].asignarPosicion(fila,columna);
 			tablero[fila-1][columna-1].sumarMovimiento();
 		}catch(MovimientoNoValidoExcepcion e){
-			System.out.println(e);
+			if(tipoJugador==1)
+				System.out.println(e);
+			noEsPosibleMover = true;
+			throw new MovimientoNoValidoExcepcion();//INTENTO
 		}catch(ArrayIndexOutOfBoundsException e){
-			System.out.println("Movimiento no permitido: está fuera del tablero");
+			if(tipoJugador==1)
+				System.out.println("Movimiento no permitido: está fuera del tablero");
+			noEsPosibleMover = true;
+			throw new ArrayIndexOutOfBoundsException();
 		}catch(NullPointerException e){
-			System.out.println("Movimiento no permitido: no puedes mover una pieza que no existe");
-		}catch(EliminacionInvalidaExcepcion e){
-			System.out.println(e);
+			if(tipoJugador==1)
+				System.out.println("Movimiento no permitido: no puedes mover una pieza que no existe");
+			noEsPosibleMover = true;
+			throw new NullPointerException();
 		}
 	}
 
-	public void juegoHumano(){
+	public void turnoHumano(int numeroJugador,String nombreJugador){
+		Menus menu = new Menus();
+		boolean coordenadaNoValida;
+		boolean movimientoNoValido;
+		do{
+			do{
+				coordenadaNoValida = false;
+				movimientoNoValido = false;
+				try{
+					menu.menuMovimiento1(numeroJugador,nombreJugador,this);
+				}catch(CoordenadaNoValidaExcepcion e){
+					System.out.println(e + "\nIntentalo de nuevo");
+					coordenadaNoValida = true;
+				}catch(MovimientoNoValidoExcepcion e){
+					System.out.println(e + "\nIntentalo de nuevo");
+					movimientoNoValido = true;
+				}catch(NullPointerException e){
+					System.out.println("No puedes tomar una pieza inexistente\nIntentalo de nuevo");
+					coordenadaNoValida = true;
+				}
+			}while(coordenadaNoValida||movimientoNoValido);
+
+			coordenadaNoValida = false;
+			movimientoNoValido = false;
+			try{
+				menu.menuMovimiento2(numeroJugador,nombreJugador,this);
+			}catch(CoordenadaNoValidaExcepcion e){
+				System.out.println(e + "\nIntentalo de nuevo");
+				coordenadaNoValida = true;
+			}catch(MovimientoNoValidoExcepcion e){
+				System.out.println(e + "\nIntentalo de nuevo");
+				movimientoNoValido = true;
+			}catch(NullPointerException e){
+				System.out.println("No existe esa coordenada\nIntentalo de nuevo");
+				coordenadaNoValida = true;
+			}
+
+			try {
+				this.moverPieza(super.obtenerPieza(menu.obtenerFilaInicial(),menu.obtenerColumnaInicial()),menu.obtenerFilaFinal(),menu.obtenerColumnaFinal(),1);
+			}catch(MovimientoNoValidoExcepcion e){
+				System.out.println("Intentalo de nuevo");
+					movimientoNoValido = true;
+			}catch(EliminacionInvalidaExcepcion e){
+				System.out.println("Intentalo de nuevo");
+					movimientoNoValido = true;
+			}catch(TipoNoValidoExcepcion e){
+			}
+		}while(coordenadaNoValida||movimientoNoValido);
+		
+		turnos++;
+	}
+
+	public void turnoComputadora(int numeroJugador){
+		Random rdm = new Random();
+		int filaInicial;
+		int filaFinal;
+		int columnaInicial;
+		int columnaFinal;
+		boolean piezaInamovible;
+
+		do{
+			noEsPosibleMover = false;
+			do{
+				piezaInamovible = false;
+				filaInicial = rdm.nextInt(super.obtenerNumeroFilas())+1;
+				columnaInicial = rdm.nextInt(super.obtenerNumeroColumnas())+1;
+
+				if(super.obtenerPieza(filaInicial,columnaInicial)==null)
+					piezaInamovible = true;
+				else 
+					if(super.obtenerPieza(filaInicial,columnaInicial).obtenerNumeroJugador()!=numeroJugador)
+						piezaInamovible = true;
+			}while(piezaInamovible);
+
+			filaFinal = rdm.nextInt(super.obtenerNumeroFilas())+1;
+			columnaFinal = rdm.nextInt(super.obtenerNumeroColumnas())+1;
+			
+			try{
+				this.moverPieza(super.obtenerPieza(filaInicial,columnaInicial),filaFinal,columnaFinal,2);
+			}catch(MovimientoNoValidoExcepcion e){
+				noEsPosibleMover = true;
+			}catch(EliminacionInvalidaExcepcion e){
+				noEsPosibleMover = true;
+			}catch(TipoNoValidoExcepcion e){
+			}
+		}while(noEsPosibleMover);
+		turnos++;
 	}
 
 }

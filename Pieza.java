@@ -72,7 +72,6 @@ public abstract class Pieza {
         peonEliminado = null;
     }
 
-
     public void asignarNumeroJugador(int numeroJugador){
         this.numeroJugador = numeroJugador;
     }
