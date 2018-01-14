@@ -1,6 +1,6 @@
 public class Caballo extends Pieza{
-	public Caballo(int numeroJugador,int fila,int columna){
-		super("Caballo",numeroJugador,fila,columna);
+	public Caballo(int numeroJugador,int fila,int columna,Jugador jugadorDelCaballo){
+		super("Caballo",numeroJugador,fila,columna,jugadorDelCaballo);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{

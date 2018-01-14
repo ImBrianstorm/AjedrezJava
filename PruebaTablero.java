@@ -1,20 +1,8 @@
 public class PruebaTablero{
-	public static void main(String[] args) throws TamañoNoSoportadoExcepcion,TipoNoValidoExcepcion{
-		JuegoDeExtincion prueba = new JuegoDeExtincion(2,"Meme","IA");
+	public static void main(String[] args) throws TamañoNoSoportadoExcepcion,TipoNoValidoExcepcion,NivelNoValidoExcepcion{
+		JuegoDeExtincion prueba = new JuegoDeExtincion(2,1,"Meme","Momo");
 		prueba.iniciarJuego();
-		System.out.println("\n" + prueba.toString());
-		prueba.turnoHumano(1,"Meme");
-		System.out.println("\n" + prueba.toString());	
-		prueba.turnoHumano(1,"Meme");
-		System.out.println("\n" + prueba.toString());	
-		prueba.turnoHumano(1,"Meme");
-		System.out.println("\n" + prueba.toString());	
-		prueba.turnoHumano(1,"Meme");
-		System.out.println("\n" + prueba.toString());	
-		prueba.turnoHumano(1,"Meme");
-		System.out.println("\n" + prueba.toString());	
-		prueba.turnoHumano(1,"Meme");
-		System.out.println("\n" + prueba.toString());	
+		prueba.turno();
 		//System.out.println();	
 	}
 }

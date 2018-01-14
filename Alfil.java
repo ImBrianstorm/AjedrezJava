@@ -1,6 +1,6 @@
 public class Alfil extends Pieza{
-	public Alfil(int numeroJugador,int fila,int columna){
-		super("Alfil",numeroJugador,fila,columna);
+	public Alfil(int numeroJugador,int fila,int columna,Jugador jugadorDelAlfil){
+		super("Alfil",numeroJugador,fila,columna,jugadorDelAlfil);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{

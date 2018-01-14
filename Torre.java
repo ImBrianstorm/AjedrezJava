@@ -1,6 +1,6 @@
 public class Torre extends Pieza{
-	public Torre(int numeroJugador,int fila,int columna){
-		super("Torre",numeroJugador,fila,columna);
+	public Torre(int numeroJugador,int fila,int columna,Jugador jugadorDeLaTorre){
+		super("Torre",numeroJugador,fila,columna,jugadorDeLaTorre);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{

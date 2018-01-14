@@ -1,6 +1,6 @@
 public class Peon extends Pieza{
-	public Peon(int numeroJugador,int fila,int columna){
-		super("Peon",numeroJugador,fila,columna);
+	public Peon(int numeroJugador,int fila,int columna,Jugador jugadorDelPeon){
+		super("Peon",numeroJugador,fila,columna,jugadorDelPeon);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
@@ -54,6 +54,9 @@ public class Peon extends Pieza{
 					if(this.obtenerFila()-fila==2){
 						if(this.obtenerNumeroMovimientos()!=0)
 							throw new MovimientoNoValidoExcepcion("Solo puedes mover dos posiciones al frente en el primer movimiento de tu peon");
+						else if(this.obtenerNumeroMovimientos()==0){
+							turnoPeonDosEscaques = this.obtenerJugadorDeLaPieza().obtenerTurnos();
+						}
 						else if(tablero.obtenerPieza(fila+1,columna)!=null)
 							throw new MovimientoNoValidoExcepcion("No puedes saltar una pieza");
 					}
@@ -68,6 +71,9 @@ public class Peon extends Pieza{
 					if(fila-this.obtenerFila()==2){
 						if(this.obtenerNumeroMovimientos()!=0)
 							throw new MovimientoNoValidoExcepcion("Solo puedes mover dos posiciones al frente en el primer movimiento de tu peon");
+						else if(this.obtenerNumeroMovimientos()==0){
+							turnoPeonDosEscaques = this.obtenerJugadorDeLaPieza().obtenerTurnos();
+						}
 						else if(tablero.obtenerPieza(fila-1,columna)!=null)
 							throw new MovimientoNoValidoExcepcion("No puedes saltar una pieza");
 					}

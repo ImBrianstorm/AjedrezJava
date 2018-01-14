@@ -1,16 +1,17 @@
 public class Jugador{
 
-	private int tipo;
+	private int tipoJugador;
 	private int numeroJugador;
 	private int turnos;
 	private String nombreJugador;
 
-	public Jugador(int tipo,int numeroJugador, String nombreJugador) throws TipoNoValidoExcepcion{
-		if(tipo<1||tipo>2)
+	public Jugador(int tipoJugador,int numeroJugador, String nombreJugador) throws TipoNoValidoExcepcion{
+		if(tipoJugador<1||tipoJugador>2)
 			throw new TipoNoValidoExcepcion("Este constructor solo admite tipo 1 (humano) o tipo 2 (computadora");
-		this.tipo = tipo;
+		this.tipoJugador = tipoJugador;
 		this.turnos = 0;
 		this.numeroJugador = numeroJugador;
+		this.nombreJugador = nombreJugador;
 	}
 
 	public void sumarTurno(){
@@ -25,7 +26,19 @@ public class Jugador{
 		return nombreJugador;
 	}
 
-	public void jugar(){
-
+	public int obtenerNumeroJugador(){
+		return numeroJugador;
 	}
+
+	public int obtenerTipoJugador(){
+		return tipoJugador;
+	}
+
+	public void asignarTipoJugador(int tipoJugador) throws TipoNoValidoExcepcion{
+		if(tipoJugador<1||tipoJugador>2)
+			throw new TipoNoValidoExcepcion("El jugador solo puede ser tipo 1 (humano) o tipo 2 (computadora");
+		this.tipoJugador = tipoJugador;
+	}
+
+
 }

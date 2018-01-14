@@ -71,7 +71,7 @@ public class Tablero{
     	if(numeroJugador==1)
     		return toString();
     	else{
-    		String tablero = lineaLetrasReversa() + lineaDivisionInicial() + lineaPiezas(numeroFilas);
+    		String tablero = lineaLetras() + lineaDivisionInicial() + lineaPiezas(numeroFilas);
         	for(int i=numeroFilas-1;i>=1;i--){
           		tablero += lineaDivision();
           		tablero += lineaPiezas(i);
@@ -88,14 +88,6 @@ public class Tablero{
     	return string + "\n";
     }
 
-    private String lineaLetrasReversa(){
-    	String string = "      ";
-    	for(int i=64+numeroColumnas;i>=65;i--){
-    		string += (char) i + "   ";
-    	}
-    	return string + "\n";
-    }
-
 	private String lineaPiezas(int fila){
 	    String string = " " + fila +"  ║ ";
 	    for(int i=0;i<numeroColumnas;i++){
@@ -105,17 +97,6 @@ public class Tablero{
 	    		string += tablero[fila-1][i].toString() + " ║ ";
 	    } 
 	    return string +"\n";
-	}
-
-	private String lineaPiezasReversa(int fila){
-	    String string = " " + fila +"  ║ ";
-	    for(int i=numeroColumnas-1;i>=0;i--){
-	    	if(tablero[fila-1][i]==null) 
-	    		string+= "  ║ ";
-	    	else 
-	    		string += tablero[fila-1][i].toString() + " ║ ";
-	    } 
-        return string +"\n";
 	}
 
 	private String lineaDivision(){

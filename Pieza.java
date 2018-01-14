@@ -4,28 +4,38 @@
  */
 public abstract class Pieza {
     private String nombre;
+    private Jugador jugadorDeLaPieza;
     private int numeroJugador;
     private int fila;
     private int columna;
     private int numeroMovimientos;
     private boolean enroque;
     private boolean capturaAlPaso;
+    protected int turnoPeonDosEscaques;
     protected Torre torreEnroque;
     protected Peon peonEliminado;
     protected int tipoEnroque;
 
-    public Pieza(String nombre,int numeroJugador,int fila,int columna){
+    public Pieza(String nombre,int numeroJugador,int fila,int columna,Jugador jugadorDeLaPieza){
         this.nombre = nombre;
         this.numeroJugador = numeroJugador ;
         this.fila = fila;
         this.columna = columna;
+        this.jugadorDeLaPieza = jugadorDeLaPieza;
         this.numeroMovimientos = 0;
         this.enroque = false;
         this.capturaAlPaso = false;
+        this.torreEnroque = null;
+        this.peonEliminado = null;
+        this.turnoPeonDosEscaques = -1;
     }
 
     public void asignarNombre(String nombre){
         this.nombre = nombre ;
+    }
+
+    public void asignarJugador(Jugador jugadorDeLaPieza){
+        this.jugadorDeLaPieza = jugadorDeLaPieza;
     }
 
     public void habilitarEnroque(){
@@ -68,6 +78,10 @@ public abstract class Pieza {
         return peonEliminado;
     }
 
+    public int obtenerTurnoPeonDosEscaques(){
+        return turnoPeonDosEscaques;
+    }
+
     public void eliminarPeonEliminado(){
         peonEliminado = null;
     }
@@ -103,6 +117,10 @@ public abstract class Pieza {
 
     public int obtenerNumeroMovimientos(){
     	return numeroMovimientos ;
+    }
+
+    public Jugador obtenerJugadorDeLaPieza(){
+        return jugadorDeLaPieza;
     }
 
     public boolean validarCoordenadas(int fila,int columna){

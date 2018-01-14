@@ -1,6 +1,6 @@
 public class Dama extends Pieza{
-	public Dama(int numeroJugador,int fila,int columna){
-		super("Dama",numeroJugador,fila,columna);
+	public Dama(int numeroJugador,int fila,int columna,Jugador jugadorDeLaDama){
+		super("Dama",numeroJugador,fila,columna,jugadorDeLaDama);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{

@@ -38,7 +38,7 @@ public class Menus{
 
 	public void menuMovimiento1(int numeroJugador, String nombreJugador,Tablero tablero) throws CoordenadaNoValidaExcepcion,MovimientoNoValidoExcepcion{
 		String coordenadas;
-		System.out.print(nombreJugador + ", ingresa las coordenadas de la pieza a mover (ejemplo:F5) → ");
+		System.out.print("\n" + nombreJugador + ", ingresa las coordenadas de la pieza a mover (ejemplo:F5) → ");
 		coordenadas = io.nextLine().trim().toUpperCase();
 		try{
 			if((int)coordenadas.charAt(0)<65||(int)coordenadas.charAt(0)>90)
@@ -80,30 +80,30 @@ public class Menus{
 			throw new CoordenadaNoValidaExcepcion("No existen estas coordenadas en el tablero");
 	}
 
-	public void menuCoronacion(int numeroJugador,int fila,int columna){
+	public void menuCoronacion(int numeroJugador,int fila,int columna,Jugador jugadorEnTurno){
 		String opcion;
 		System.out.println("\n¡Felicidades! Tu peon ha llegado a la ultima fila.");
 		System.out.println("Esto quiere decir que puede coronarse y convertirse en dama, alfil o caballo");
-		System.out.println("¿Deseas hacerlo? Escribe SI para coronar a tu peon, ingresa otro dato en caso contrario");
+		System.out.println("¿Deseas hacerlo? Escribe SI para coronar a tu peon, ingresa otro dato en caso contrario:");
 		opcion = io.nextLine().trim().toLowerCase();
 
 		String pieza;
 		if(opcion.equals("si")||opcion.equals("sí")){
-			System.out.println("¿En que pieza deseas que se convierta?\n");
+			System.out.println("\n¿En que pieza deseas que se convierta?\n");
 			System.out.println("1 = Torre");
 			System.out.println("2 = Caballo");
 			System.out.println("3 = Dama");
-			System.out.println("Ingrese cualquier otro dato para no coronar");
+			System.out.println("Ingrese cualquier otro dato para no coronar:");
 			pieza = io.nextLine().trim().toLowerCase();
 
 			if(pieza.equals("1")){
-				piezaCoronada = new Torre(numeroJugador,fila,columna);
+				piezaCoronada = new Torre(numeroJugador,fila,columna,jugadorEnTurno);
 			}
 			else if(pieza.equals("2")){
-				piezaCoronada = new Caballo(numeroJugador,fila,columna);
+				piezaCoronada = new Caballo(numeroJugador,fila,columna,jugadorEnTurno);
 			}
 			else if(pieza.equals("3")){
-				piezaCoronada = new Dama(numeroJugador,fila,columna);
+				piezaCoronada = new Dama(numeroJugador,fila,columna,jugadorEnTurno);
 			}
 			else{
 				piezaCoronada = null;

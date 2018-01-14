@@ -1,6 +1,6 @@
 public class Rey extends Pieza{
-	public Rey(int numeroJugador,int fila,int columna){
-		super("Rey",numeroJugador,fila,columna);
+	public Rey(int numeroJugador,int fila,int columna,Jugador jugadorDelRey){
+		super("Rey",numeroJugador,fila,columna,jugadorDelRey);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
