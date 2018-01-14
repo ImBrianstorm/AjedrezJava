@@ -114,6 +114,59 @@ public class JuegoDeExtincion extends Tablero{
 			noEsPosibleMover = true;
 			throw new NullPointerException();
 		}
+
+		//Coronacion del peon
+		if(pieza.obtenerNombre().equals("Peon") && noEsPosibleMover==false){
+			if(pieza.obtenerNumeroJugador()==1){
+				if(fila==1){
+					if(tipoJugador==1){
+						Menus menu = new Menus();
+						menu.menuCoronacion(1,fila,columna);
+						if(menu.obtenerPiezaCoronada()!=null){
+							this.quitarPiezaTablero(pieza);
+							this.agregarPieza(menu.obtenerPiezaCoronada(),fila,columna);
+						}
+					}else if(tipoJugador==2){
+						Random rnd = new Random();
+						int nuevaPiezaInt = rnd.nextInt(3);
+						Pieza piezaCoronada;
+						if(nuevaPiezaInt==0){
+							piezaCoronada = new Torre(1,fila,columna);
+						}
+						else if(nuevaPiezaInt==1){
+							piezaCoronada = new Caballo(1,fila,columna);
+						}
+						else if(nuevaPiezaInt==2){
+							piezaCoronada = new Dama(1,fila,columna);
+						}
+					}
+				}
+			}else if(pieza.obtenerNumeroJugador()==2){
+				if(fila==this.obtenerNumeroFilas()){
+					if(tipoJugador==1){
+						Menus menu = new Menus();
+						menu.menuCoronacion(2,fila,columna);
+						if(menu.obtenerPiezaCoronada()!=null){
+							this.quitarPiezaTablero(pieza);
+							this.agregarPieza(menu.obtenerPiezaCoronada(),fila,columna);
+						}
+					}else if(tipoJugador==2){
+						Random rnd = new Random();
+						int nuevaPiezaInt = rnd.nextInt(3);
+						Pieza piezaCoronada;
+						if(nuevaPiezaInt==0){
+							piezaCoronada = new Torre(2,fila,columna);
+						}
+						else if(nuevaPiezaInt==1){
+							piezaCoronada = new Caballo(2,fila,columna);
+						}
+						else if(nuevaPiezaInt==2){
+							piezaCoronada = new Dama(2,fila,columna);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public void turnoHumano(int numeroJugador,String nombreJugador){
@@ -141,7 +194,7 @@ public class JuegoDeExtincion extends Tablero{
 			coordenadaNoValida = false;
 			movimientoNoValido = false;
 			try{
-				menu.menuMovimiento2(numeroJugador,nombreJugador,this);
+				menu.menuMovimiento2(this);
 			}catch(CoordenadaNoValidaExcepcion e){
 				System.out.println(e + "\nIntentalo de nuevo");
 				coordenadaNoValida = true;
