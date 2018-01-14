@@ -8,7 +8,7 @@ public class Rey extends Pieza{
 			throw new MovimientoNoValidoExcepcion("No puedes desplazar a tu rey a su posicion actual");
 		}
 		else if(this.obtenerColumna()!=columna&&this.obtenerFila()!=fila){
-			if(Math.pow(this.obtenerFila()-fila,2)!=1||Math.pow(this.obtenerFila()-fila,2)!=1) 
+			if(Math.pow(this.obtenerFila()-fila,2)!=1||Math.pow(this.obtenerColumna()-columna,2)!=1) 
 				throw new MovimientoNoValidoExcepcion("No puedes desplazar a tu rey a esta posicion");
 		}
 		else if(this.obtenerColumna()==columna&&this.obtenerFila()!=fila){

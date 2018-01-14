@@ -38,19 +38,19 @@ public class Menus{
 
 	public void menuMovimiento1(int numeroJugador, String nombreJugador,Tablero tablero) throws CoordenadaNoValidaExcepcion,MovimientoNoValidoExcepcion{
 		String coordenadas;
-		System.out.print("\n" + nombreJugador + ", ingresa las coordenadas de la pieza a mover (ejemplo:F5) → ");
+		System.out.print("\n" + nombreJugador + ", ingresa las coordenadas de la pieza a mover → ");
 		coordenadas = io.nextLine().trim().toUpperCase();
 		try{
 			if((int)coordenadas.charAt(0)<65||(int)coordenadas.charAt(0)>90)
-				throw new CoordenadaNoValidaExcepcion("No ingresaste una letra al inicio");
+				throw new CoordenadaNoValidaExcepcion("No ingresaste una letra al inicio (ejemplo valido: F5)");
 		}catch(StringIndexOutOfBoundsException e){
-			throw new CoordenadaNoValidaExcepcion("No ingresaste una letra al inicio");
+			throw new CoordenadaNoValidaExcepcion("No ingresaste una letra al inicio (ejemplo valido: F5)");
 		}
 		columnaInicial = asciiToColumna(coordenadas.charAt(0));
 		try{
 			filaInicial = Integer.parseInt(coordenadas.substring(1));	
 		}catch(NumberFormatException e){
-			throw new CoordenadaNoValidaExcepcion("No ingresaste un numero a continuacion de tu letra");
+			throw new CoordenadaNoValidaExcepcion("No ingresaste un numero a continuacion de tu letra (ejemplo valido: F5)");
 		}
 		if(filaInicial>tablero.obtenerNumeroFilas())
 			throw new CoordenadaNoValidaExcepcion("No existen estas coordenadas en el tablero");
@@ -63,21 +63,21 @@ public class Menus{
 	public void menuMovimiento2(Tablero tablero) throws CoordenadaNoValidaExcepcion,MovimientoNoValidoExcepcion{
 		String coordenadas;
 
-		System.out.print("Ingresa las coordenadas a la que deseas mover tu pieza (ejemplo:F5) → ");
+		System.out.print("Ingresa las coordenadas a la que deseas mover tu pieza → ");
 		coordenadas = io.nextLine().trim().toUpperCase();
 		if((int)coordenadas.charAt(0)<65||(int)coordenadas.charAt(0)>90)
-			throw new CoordenadaNoValidaExcepcion("No ingresaste una letra al inicio");
+			throw new CoordenadaNoValidaExcepcion("No ingresaste una letra al inicio (ejemplo valido: F5)");
 		else 
 			columnaFinal = asciiToColumna(coordenadas.charAt(0));
 		try{
 			filaFinal = Integer.parseInt(coordenadas.substring(1));	
 		}catch(NumberFormatException e){
-			throw new CoordenadaNoValidaExcepcion("No ingresaste un numero a continuacion de tu letra");
+			throw new CoordenadaNoValidaExcepcion("No ingresaste un numero a continuacion de tu letra (ejemplo valido: F5)");
 		}
 		if(filaInicial>tablero.obtenerNumeroFilas())
-			throw new CoordenadaNoValidaExcepcion("No existen estas coordenadas en el tablero");
+			throw new CoordenadaNoValidaExcepcion("No existen estas coordenadas en el tablero (ejemplo valido: F5)");
 		else if(columnaInicial>tablero.obtenerNumeroColumnas())
-			throw new CoordenadaNoValidaExcepcion("No existen estas coordenadas en el tablero");
+			throw new CoordenadaNoValidaExcepcion("No existen estas coordenadas en el tablero (ejemplo valido: F5)");
 	}
 
 	public void menuCoronacion(int numeroJugador,int fila,int columna,Jugador jugadorEnTurno){

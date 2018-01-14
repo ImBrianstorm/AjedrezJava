@@ -64,8 +64,6 @@ public class JuegoDeExtincion extends Tablero{
 		numeroCaballosJ1 = 2;
 		numeroDamasJ1 = 1;
 		numeroReyesJ1 = 1;
-
-	
 		
 		//JUGADOR 2
 		tablero[0][0] = new Torre(2,1,1,segundoJugador);
