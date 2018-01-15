@@ -9,10 +9,12 @@ public class JuegoDeExtincion extends Tablero{
 	private Jugador segundoJugador;
 	private boolean noEsPosibleMover;
 	private boolean coronacionPeon;
-	private boolean leyendaCapturado;
+	private boolean leyendaCapturadoHumano;
+	private boolean leyendaCapturadoComputadora;
 	private Pieza piezaACoronar;
 	private int filaCoronacion;
 	private int columnaCoronacion;
+	private Jugador ganador;
 	
 	private int numeroPeonesJ1;
 	private int numeroTorresJ1;
@@ -26,13 +28,15 @@ public class JuegoDeExtincion extends Tablero{
 	private int numeroDamasJ2;
 	private int numeroReyesJ2;
 
-	public JuegoDeExtincion(int tipo,int nivel,String nombrePrimerJugador,String nombreSegundoJugador) throws TamañoNoSoportadoExcepcion,TipoNoValidoExcepcion,NivelNoValidoExcepcion{
+	public JuegoDeExtincion(int tipoJuego,int nivel,String nombrePrimerJugador,String nombreSegundoJugador) throws TamañoNoSoportadoExcepcion,TipoNoValidoExcepcion,NivelNoValidoExcepcion{
 		super(6,6);
 		this.turnos = 0;
-		this.tipo = tipo;
+		this.tipo = tipoJuego;
 		this.coronacionPeon = false;
 		this.nivel = nivel;
-		this.leyendaCapturado = false;
+		this.leyendaCapturadoHumano = false;
+		this.leyendaCapturadoComputadora = false;
+		this.ganador = null;
 		if(tipo==1){
 			primerJugador = new Jugador(1,1,nombrePrimerJugador);
 			segundoJugador = new Jugador(1,2,nombreSegundoJugador);
@@ -41,23 +45,27 @@ public class JuegoDeExtincion extends Tablero{
 			primerJugador = new Jugador(1,1,nombrePrimerJugador);
 			segundoJugador = new Jugador(2,2,"IA");
 		}
-		if(tipo<1||tipo>2)
+		if(tipoJuego<1||tipoJuego>2)
 			throw new TipoNoValidoExcepcion("Este constructor solo admite tipo 1 (humano) o tipo 2 (computadora");
 		if(nivel<1||nivel>3)
 			throw new NivelNoValidoExcepcion("Este constructor solo admite del nivel 1 al nivel 3");
 	}
 
+	public Jugador obtenerGanador(){
+		return ganador;
+	}
+
 	public void iniciarJuego(){
 		
 		//JUGADOR 1
-		tablero[5][0] = new Torre(1,6,1,primerJugador);
-		tablero[5][1] = new Caballo(1,6,2,primerJugador);
-		tablero[5][2] = new Dama(1,6,3,primerJugador);
-		tablero[5][3] = new Rey(1,6,4,primerJugador);
-		tablero[5][4] = new Caballo(1,6,5,primerJugador);
-		tablero[5][5] = new Torre(1,6,6,primerJugador);
+		tablero[5][0] = new Torre(6,1,primerJugador);
+		tablero[5][1] = new Caballo(6,2,primerJugador);
+		tablero[5][2] = new Dama(6,3,primerJugador);
+		tablero[5][3] = new Rey(6,4,primerJugador);
+		tablero[5][4] = new Caballo(6,5,primerJugador);
+		tablero[5][5] = new Torre(6,6,primerJugador);
 
-		for(int i=0;i<=5;i++) tablero[4][i] = new Peon(1,5,i+1,primerJugador);
+		for(int i=0;i<=5;i++) tablero[4][i] = new Peon(5,i+1,primerJugador);
 
 		numeroPeonesJ1 = 6;
 		numeroTorresJ1 = 2;
@@ -66,14 +74,14 @@ public class JuegoDeExtincion extends Tablero{
 		numeroReyesJ1 = 1;
 		
 		//JUGADOR 2
-		tablero[0][0] = new Torre(2,1,1,segundoJugador);
-		tablero[0][1] = new Caballo(2,1,2,segundoJugador);
-		tablero[0][2] = new Dama(2,1,3,segundoJugador);
-		tablero[0][3] = new Rey(2,1,4,segundoJugador);
-		tablero[0][4] = new Caballo(2,1,5,segundoJugador);
-		tablero[0][5] = new Torre(2,1,6,segundoJugador);
+		tablero[0][0] = new Torre(1,1,segundoJugador);
+		tablero[0][1] = new Caballo(1,2,segundoJugador);
+		tablero[0][2] = new Dama(1,3,segundoJugador);
+		tablero[0][3] = new Rey(1,4,segundoJugador);
+		tablero[0][4] = new Caballo(1,5,segundoJugador);
+		tablero[0][5] = new Torre(1,6,segundoJugador);
 
-		for(int i=0;i<=5;i++) tablero[1][i] = new Peon(2,2,i+1,segundoJugador);
+		for(int i=0;i<=5;i++) tablero[1][i] = new Peon(2,i+1,segundoJugador);
 
 		numeroPeonesJ2 = 6;
 		numeroTorresJ2 = 2;
@@ -92,7 +100,7 @@ public class JuegoDeExtincion extends Tablero{
 			pieza.validarEliminar(piezaEliminada);
 		}catch(EliminacionInvalidaExcepcion e){
 			if(tipoJugador==1)
-				System.out.println(e);
+				System.out.println((char)27 + "[31m" + e);
 			throw new EliminacionInvalidaExcepcion();
 		}	
 	}
@@ -109,8 +117,12 @@ public class JuegoDeExtincion extends Tablero{
 	}
 
 	private void capturaAlPaso(Pieza peonAtacante,Pieza peonAtacado) throws CapturaNoValidaExcepcion{
-		if(peonAtacado.obtenerTurnoPeonDosEscaques()+1!=peonAtacante.obtenerJugadorDeLaPieza().obtenerTurnos())
-			throw new CapturaNoValidaExcepcion("La captura solo puede realizarse en la jugada inmediatamente siguiente al avance de salida del peon de dos escaques hacia delante");
+		if(peonAtacante.obtenerJugadorDeLaPieza().obtenerNumeroJugador()==1)
+			if(peonAtacado.obtenerTurnoPeonDosEscaques()+1!=peonAtacante.obtenerJugadorDeLaPieza().obtenerTurnos())
+				throw new CapturaNoValidaExcepcion("La captura solo puede realizarse en la jugada inmediatamente siguiente al avance de salida del peon de dos escaques hacia delante");
+		else if(peonAtacante.obtenerJugadorDeLaPieza().obtenerNumeroJugador()==2)
+			if(peonAtacado.obtenerTurnoPeonDosEscaques()!=peonAtacante.obtenerJugadorDeLaPieza().obtenerTurnos())
+				throw new CapturaNoValidaExcepcion("La captura solo puede realizarse en la jugada inmediatamente siguiente al avance de salida del peon de dos escaques hacia delante");
 		super.quitarPiezaTablero(peonAtacado);
 	}
 
@@ -133,7 +145,7 @@ public class JuegoDeExtincion extends Tablero{
 					pieza.eliminarPeonEliminado();
 				}catch(CapturaNoValidaExcepcion e){
 					if(tipoJugador==1)
-						System.out.println("\n" + e);
+						System.out.println((char)27 + "[31m\n" + e);
 					noEsPosibleMover = true;
 					throw new EliminacionInvalidaExcepcion();
 				}
@@ -142,7 +154,10 @@ public class JuegoDeExtincion extends Tablero{
 				capturarPieza(pieza,obtenerPieza(fila,columna),tipoJugador);
 				restarCantidadPiezas(obtenerPieza(fila,columna));
 				tablero[obtenerPieza(fila,columna).obtenerFila()-1][obtenerPieza(fila,columna).obtenerColumna()-1] = null;
-				activarLeyendaCapturado();
+				if(jugadorEnTurno.obtenerTipoJugador()==1)
+					activarLeyendaCapturadoHumano();
+				else if(jugadorEnTurno.obtenerTipoJugador()==2)
+					activarLeyendaCapturadoComputadora();
 			}
 			super.quitarPiezaTablero(pieza);
 			tablero[fila-1][columna-1] = pieza;			
@@ -150,17 +165,17 @@ public class JuegoDeExtincion extends Tablero{
 			tablero[fila-1][columna-1].sumarMovimiento();
 		}catch(MovimientoNoValidoExcepcion e){
 			if(tipoJugador==1)
-				System.out.println("\n" + e);
+				System.out.println((char)27 + "[31m\n" + e);
 			noEsPosibleMover = true;
 			throw new MovimientoNoValidoExcepcion();
 		}catch(ArrayIndexOutOfBoundsException e){
 			if(tipoJugador==1)
-				System.out.println("\nMovimiento no permitido: está fuera del tablero");
+				System.out.println((char)27 + "[31m\nMovimiento no permitido: está fuera del tablero");
 			noEsPosibleMover = true;
 			throw new ArrayIndexOutOfBoundsException();
 		}catch(NullPointerException e){
 			if(tipoJugador==1)
-				System.out.println("\nMovimiento no permitido: no puedes mover una pieza que no existe");
+				System.out.println((char)27 + "[31m\nMovimiento no permitido: no puedes mover una pieza que no existe");
 			noEsPosibleMover = true;
 			throw new NullPointerException();
 		}
@@ -168,6 +183,7 @@ public class JuegoDeExtincion extends Tablero{
 		//Coronacion del peon
 		if(pieza.obtenerNombre().equals("Peon") && noEsPosibleMover==false){
 			activarCoronacionPeon(pieza,fila,columna);
+			desactivarCoronacionPeon();
 		}
 		jugadorEnTurno.sumarTurno();
 	}
@@ -180,14 +196,20 @@ public class JuegoDeExtincion extends Tablero{
 		String nombreJugador = jugadorEnTurno.obtenerNombreJugador();
 
 		if(jugadorEnTurno.obtenerNumeroJugador()==1)
-			System.out.println("\n" + super.toString());
+			System.out.println((char)27 + "[37m\n" + super.toString());
 		else if(jugadorEnTurno.obtenerNumeroJugador()==2)
-			System.out.println("\n" + super.toString(2));
+			System.out.println((char)27 + "[37m\n" + super.toString(2));
 
-		if(leyendaCapturado==true){
-			System.out.println("¡Capturado!");
-			desactivarLeyendaCapturado();
+		if(leyendaCapturadoHumano==true){
+			System.out.println((char)27 + "[32m¡Capturado!\n");
+			desactivarLeyendaCapturadoHumano();
 		}
+
+		if(leyendaCapturadoComputadora==true){
+			System.out.println((char)27 + "[31m¡Te han capturado!\n");
+			desactivarLeyendaCapturadoComputadora();
+		}
+
 		do{
 			do{
 				coordenadaNoValida = false;
@@ -195,13 +217,13 @@ public class JuegoDeExtincion extends Tablero{
 				try{
 					menu.menuMovimiento1(numeroJugador,nombreJugador,this);
 				}catch(CoordenadaNoValidaExcepcion e){
-					System.out.println("\n" + e + "\nIntentalo de nuevo");
+					System.out.println((char)27 + "[31m\n" + e + ", intentalo de nuevo\n");
 					coordenadaNoValida = true;
 				}catch(MovimientoNoValidoExcepcion e){
-					System.out.println("\n" + e + "\nIntentalo de nuevo");
+					System.out.println((char)27 + "[31m\n" + e + ", intentalo de nuevo\n");
 					movimientoNoValido = true;
 				}catch(NullPointerException e){
-					System.out.println("\nNo puedes tomar una pieza inexistente\nIntentalo de nuevo");
+					System.out.println((char)27 + "[31m\nNo puedes tomar una pieza inexistente, intentalo de nuevo\n");
 					coordenadaNoValida = true;
 				}
 			}while(coordenadaNoValida||movimientoNoValido);
@@ -211,23 +233,23 @@ public class JuegoDeExtincion extends Tablero{
 			try{
 				menu.menuMovimiento2(this);
 			}catch(CoordenadaNoValidaExcepcion e){
-				System.out.println(e + "\nIntentalo de nuevo");
+				System.out.println((char)27 + "[31m" + e + ", intentalo de nuevo\n");
 				coordenadaNoValida = true;
 			}catch(MovimientoNoValidoExcepcion e){
-				System.out.println(e + "\nIntentalo de nuevo");
+				System.out.println((char)27 + "[31m" + e + ", intentalo de nuevo\n");
 				movimientoNoValido = true;
 			}catch(NullPointerException e){
-				System.out.println("No existe esa coordenada\nIntentalo de nuevo");
+				System.out.println((char)27 + "[31mNo existe esta coordenada, intentalo de nuevo\n");
 				coordenadaNoValida = true;
 			}
 
 			try {
 				this.moverPieza(super.obtenerPieza(menu.obtenerFilaInicial(),menu.obtenerColumnaInicial()),menu.obtenerFilaFinal(),menu.obtenerColumnaFinal(),jugadorEnTurno);
 			}catch(MovimientoNoValidoExcepcion e){
-				System.out.println("Intentalo de nuevo");
+				System.out.println((char)27 + "[31mIntentalo de nuevo\n");
 					movimientoNoValido = true;
 			}catch(EliminacionInvalidaExcepcion e){
-				System.out.println("Intentalo de nuevo");
+				System.out.println((char)27 + "[31mIntentalo de nuevo\n");
 					movimientoNoValido = true;
 			}catch(TipoNoValidoExcepcion e){
 			}
@@ -274,7 +296,7 @@ public class JuegoDeExtincion extends Tablero{
 		turnos++;
 	}
 
-	public void turno(){
+	public void jugar(){
 		Jugador ganador = null;
 		int turnosNivel = 0;
 
@@ -323,9 +345,9 @@ public class JuegoDeExtincion extends Tablero{
 			System.out.println("JUEGO TERMINADO");
 			
 			if(ganador==null)
-				System.out.println("¡Es un empate!");
+				System.out.println((char)27 + "[32m¡Es un empate!");
 			else
-				System.out.println("¡El ganador es " + ganador.obtenerNombreJugador() + " :)");
+				System.out.println((char)27 + "[32m¡El ganador es " + ganador.obtenerNombreJugador() + "! :)");
 			
 		}
 		else if(this.tipo==2){
@@ -357,14 +379,15 @@ public class JuegoDeExtincion extends Tablero{
 			System.out.println("JUEGO TERMINADO");
 			
 			if(ganador==null)
-				System.out.println("¡Ha ganado la computadora! :(");
+				System.out.println((char)27 + "[31m¡Ha ganado la computadora! :(");
 			else{
 				if(ganador==primerJugador)
-					System.out.println("¡Ganaste! :)");
+					System.out.println((char)27 + "[32m¡Ganaste! :)");
 				else if(ganador==segundoJugador)
-					System.out.println("¡Ha ganado la computadora! :(");
+					System.out.println((char)27 + "[31m¡Ha ganado la computadora! :(");
 			}
 		}
+		this.ganador = ganador;
 	}
 
 	public Jugador verificarTablero(){
@@ -442,12 +465,20 @@ public class JuegoDeExtincion extends Tablero{
 		this.columnaCoronacion = -1;
 	}
 
-	private void activarLeyendaCapturado(){
-		this.leyendaCapturado = true;
+	private void activarLeyendaCapturadoHumano(){
+		this.leyendaCapturadoHumano = true;
 	}
 
-	private void desactivarLeyendaCapturado(){
-		this.leyendaCapturado = false;
+	private void desactivarLeyendaCapturadoHumano(){
+		this.leyendaCapturadoHumano = false;
+	}
+
+	private void activarLeyendaCapturadoComputadora(){
+		this.leyendaCapturadoComputadora = true;
+	}
+
+	private void desactivarLeyendaCapturadoComputadora(){
+		this.leyendaCapturadoComputadora = false;
 	}
 
 	private void coronacionPeon(int tipoJugador,Jugador jugadorEnTurno){
@@ -455,7 +486,7 @@ public class JuegoDeExtincion extends Tablero{
 			if(filaCoronacion==1){
 				if(tipoJugador==1){
 					Menus menu = new Menus();
-					menu.menuCoronacion(1,filaCoronacion,columnaCoronacion,jugadorEnTurno);
+					menu.menuCoronacion(filaCoronacion,columnaCoronacion,jugadorEnTurno);
 					if(menu.obtenerPiezaCoronada()!=null){
 						restarCantidadPiezas(piezaACoronar);
 						this.quitarPiezaTablero(piezaACoronar);
@@ -467,13 +498,13 @@ public class JuegoDeExtincion extends Tablero{
 					int nuevaPiezaInt = rnd.nextInt(3);
 					Pieza piezaCoronada = null;
 					if(nuevaPiezaInt==0){
-						piezaCoronada = new Torre(1,filaCoronacion,columnaCoronacion,primerJugador);
+						piezaCoronada = new Torre(filaCoronacion,columnaCoronacion,primerJugador);
 					}
 					else if(nuevaPiezaInt==1){
-						piezaCoronada = new Caballo(1,filaCoronacion,columnaCoronacion,primerJugador);
+						piezaCoronada = new Caballo(filaCoronacion,columnaCoronacion,primerJugador);
 					}
 					else if(nuevaPiezaInt==2){
-						piezaCoronada = new Dama(1,filaCoronacion,columnaCoronacion,primerJugador);
+						piezaCoronada = new Dama(filaCoronacion,columnaCoronacion,primerJugador);
 					}
 					restarCantidadPiezas(piezaACoronar);
 					this.quitarPiezaTablero(piezaACoronar);
@@ -485,24 +516,30 @@ public class JuegoDeExtincion extends Tablero{
 			if(filaCoronacion==this.obtenerNumeroFilas()){
 				if(tipoJugador==1){
 					Menus menu = new Menus();
-					menu.menuCoronacion(2,filaCoronacion,columnaCoronacion,jugadorEnTurno);
+					menu.menuCoronacion(filaCoronacion,columnaCoronacion,jugadorEnTurno);
 					if(menu.obtenerPiezaCoronada()!=null){
+						restarCantidadPiezas(piezaACoronar);
 						this.quitarPiezaTablero(piezaACoronar);
+						sumarCantidadPiezas(menu.obtenerPiezaCoronada());
 						this.agregarPieza(menu.obtenerPiezaCoronada(),filaCoronacion,columnaCoronacion);
 					}
 				}else if(tipoJugador==2){
 					Random rnd = new Random();
 					int nuevaPiezaInt = rnd.nextInt(3);
-					Pieza piezaCoronada;
+					Pieza piezaCoronada = null;
 					if(nuevaPiezaInt==0){
-						piezaCoronada = new Torre(2,filaCoronacion,columnaCoronacion,segundoJugador);
+						piezaCoronada = new Torre(filaCoronacion,columnaCoronacion,segundoJugador);
 					}
 					else if(nuevaPiezaInt==1){
-						piezaCoronada = new Caballo(2,filaCoronacion,columnaCoronacion,segundoJugador);
+						piezaCoronada = new Caballo(filaCoronacion,columnaCoronacion,segundoJugador);
 					}
 					else if(nuevaPiezaInt==2){
-						piezaCoronada = new Dama(2,filaCoronacion,columnaCoronacion,segundoJugador);
+						piezaCoronada = new Dama(filaCoronacion,columnaCoronacion,segundoJugador);
 					}
+					restarCantidadPiezas(piezaACoronar);
+					this.quitarPiezaTablero(piezaACoronar);
+					sumarCantidadPiezas(piezaCoronada);
+					this.agregarPieza(piezaCoronada,filaCoronacion,columnaCoronacion);
 				}
 			}
 		}

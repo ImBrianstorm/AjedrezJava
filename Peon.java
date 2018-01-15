@@ -1,6 +1,6 @@
 public class Peon extends Pieza{
-	public Peon(int numeroJugador,int fila,int columna,Jugador jugadorDelPeon){
-		super("Peon",numeroJugador,fila,columna,jugadorDelPeon);
+	public Peon(int fila,int columna,Jugador jugadorDelPeon){
+		super("Peon",fila,columna,jugadorDelPeon);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
@@ -100,4 +100,12 @@ public class Peon extends Pieza{
         	throw new EliminacionInvalidaExcepcion("Los peones no pueden eliminar verticalmente");
         }
     }
+
+    @Override
+	public String toString(){
+		if(this==null) 
+            return " ";
+        else
+            return (super.obtenerNumeroJugador()==1) ? "♙" : "♟";
+	}
 }

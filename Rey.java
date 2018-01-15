@@ -1,6 +1,6 @@
 public class Rey extends Pieza{
-	public Rey(int numeroJugador,int fila,int columna,Jugador jugadorDelRey){
-		super("Rey",numeroJugador,fila,columna,jugadorDelRey);
+	public Rey(int fila,int columna,Jugador jugadorDelRey){
+		super("Rey",fila,columna,jugadorDelRey);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
@@ -82,5 +82,12 @@ public class Rey extends Pieza{
 				}
 			}
 		}
+	}
+	@Override
+	public String toString(){
+		if(this==null) 
+            return " ";
+        else
+            return (super.obtenerNumeroJugador()==1) ? "♔" : "♚";
 	}
 }

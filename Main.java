@@ -1,26 +1,33 @@
 import java.util.Scanner;
-import java.util.InputMismatchException;
-
 public class Main{
-	public static void main(String[] args) throws TamañoNoSoportadoExcepcion{
+	public static void main(String[] args) throws TamañoNoSoportadoExcepcion,TipoNoValidoExcepcion,NivelNoValidoExcepcion{
 		Scanner io = new Scanner(System.in);
-		int opcion = -1;
-	
-		System.out.println("Bienvenido, ¿jugarás contra otro jugador o contra la máquina?");
-		System.out.println("1. Humano");
-		System.out.println("Ingrese cualquier otro dato para salir.\n");
-		System.out.println("2. Máquina");
-		try{
-			opcion = io.nextInt();
-			if(opcion!=1&&opcion!=2) throw new InputMismatchException();
-		}catch(InputMismatchException e){
-			System.out.println("Hasta luego.");
-			System.exit(0);
-		}
-		if(opcion==0){
-			JuegoDeExtincion humano = new JuegoDeExtincion(0);
-		}else{
-			JuegoDeExtincion computadora = new JuegoDeExtincion(1);		
+		String nombreJ1;
+		String nombreJ2;
+		int opcionInicio;
+		int tipoJuego;
+		int nivelJuego;
+
+		Menus menu = new Menus();
+		menu.menuNombreJ1();
+		nombreJ1 = menu.obtenerNombrePrimerJugador();
+		menu.menuOpcionesInicio();
+		switch(menu.obtenerOpcionInicio()){
+			case 1:
+			menu.menuTipoJuego();
+			tipoJuego = menu.obtenerTipoJuego();
+			if(tipoJuego==1){
+				menu.menuNombreJ2();
+				nombreJ2 = menu.obtenerNombreSegundoJugador();
+			}else{
+				nombreJ2 = "Computadora";
+			}
+			menu.menuNivelJuego();
+			nivelJuego = menu.obtenerNivelJuego();
+
+			JuegoDeExtincion juego = new JuegoDeExtincion(tipoJuego,nivelJuego,nombreJ1,nombreJ2);
+			juego.iniciarJuego();
+			juego.jugar();
 		}
 	}
 }

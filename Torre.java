@@ -1,6 +1,6 @@
 public class Torre extends Pieza{
-	public Torre(int numeroJugador,int fila,int columna,Jugador jugadorDeLaTorre){
-		super("Torre",numeroJugador,fila,columna,jugadorDeLaTorre);
+	public Torre(int fila,int columna,Jugador jugadorDeLaTorre){
+		super("Torre",fila,columna,jugadorDeLaTorre);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
@@ -40,5 +40,13 @@ public class Torre extends Pieza{
 				}
 			}
 		}
+	}
+
+	@Override
+	public String toString(){
+		if(this==null) 
+            return " ";
+        else
+            return (super.obtenerNumeroJugador()==1) ? "♖" : "♜";
 	}
 }

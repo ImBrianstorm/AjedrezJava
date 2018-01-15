@@ -52,6 +52,7 @@ public class Tablero{
 
 	public void agregarPieza(Pieza pieza,int fila,int columna){
 		tablero[fila-1][columna-1] = pieza;
+		pieza.asignarPosicion(fila,columna);
 	}
 
 	public void quitarPiezaTablero(Pieza pieza){

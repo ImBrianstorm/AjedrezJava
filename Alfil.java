@@ -1,6 +1,6 @@
 public class Alfil extends Pieza{
-	public Alfil(int numeroJugador,int fila,int columna,Jugador jugadorDelAlfil){
-		super("Alfil",numeroJugador,fila,columna,jugadorDelAlfil);
+	public Alfil(int fila,int columna,Jugador jugadorDelAlfil){
+		super("Alfil",fila,columna,jugadorDelAlfil);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
@@ -47,5 +47,14 @@ public class Alfil extends Pieza{
 		else
 			throw new MovimientoNoValidoExcepcion("No puedes desplazar a tu alfil a esta posicion");
 	}
+
+	@Override
+	public String toString(){
+		if(this==null) 
+            return " ";
+        else
+            return (super.obtenerNumeroJugador()==1) ? "♗" : "♝";
+	}
+
 
 }

@@ -16,9 +16,9 @@ public abstract class Pieza {
     protected Peon peonEliminado;
     protected int tipoEnroque;
 
-    public Pieza(String nombre,int numeroJugador,int fila,int columna,Jugador jugadorDeLaPieza){
+    public Pieza(String nombre,int fila,int columna,Jugador jugadorDeLaPieza){
         this.nombre = nombre;
-        this.numeroJugador = numeroJugador ;
+        this.numeroJugador = jugadorDeLaPieza.obtenerNumeroJugador();
         this.fila = fila;
         this.columna = columna;
         this.jugadorDeLaPieza = jugadorDeLaPieza;
@@ -139,7 +139,7 @@ public abstract class Pieza {
             throw new EliminacionInvalidaExcepcion("No puedes eliminar una pieza que no existe");
         }
         else if(this.obtenerNumeroJugador()==piezaEliminada.obtenerNumeroJugador()){
-            throw new EliminacionInvalidaExcepcion("No puedes eliminar esta pieza porque es tuya.");
+            throw new EliminacionInvalidaExcepcion("No puedes eliminar esta pieza porque es tuya");
         }
     }
     

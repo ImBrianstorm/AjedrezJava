@@ -1,6 +1,6 @@
 public class Caballo extends Pieza{
-	public Caballo(int numeroJugador,int fila,int columna,Jugador jugadorDelCaballo){
-		super("Caballo",numeroJugador,fila,columna,jugadorDelCaballo);
+	public Caballo(int fila,int columna,Jugador jugadorDelCaballo){
+		super("Caballo",fila,columna,jugadorDelCaballo);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
@@ -8,4 +8,11 @@ public class Caballo extends Pieza{
 			throw new MovimientoNoValidoExcepcion("No puedes mover a tu caballo a esta posicion");
 	}
 
+	@Override
+	public String toString(){
+		if(this==null) 
+            return " ";
+        else
+            return (super.obtenerNumeroJugador()==1) ? "♘" : "♞";
+	}
 }

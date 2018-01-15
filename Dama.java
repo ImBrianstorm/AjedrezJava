@@ -1,6 +1,6 @@
 public class Dama extends Pieza{
-	public Dama(int numeroJugador,int fila,int columna,Jugador jugadorDeLaDama){
-		super("Dama",numeroJugador,fila,columna,jugadorDeLaDama);
+	public Dama(int fila,int columna,Jugador jugadorDeLaDama){
+		super("Dama",fila,columna,jugadorDeLaDama);
 	}
 
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
@@ -76,6 +76,14 @@ public class Dama extends Pieza{
 				}
 			}
 		}
+	}
+
+	@Override
+	public String toString(){
+		if(this==null) 
+            return " ";
+        else
+            return (super.obtenerNumeroJugador()==1) ? "♕" : "♛";
 	}
 
 }
