@@ -1,8 +1,29 @@
+/**
+ * Clase que simula el comportamiento de un Rey, heredando el comportamiento de una pieza
+ * @author Mauricio Chávez
+ * @version 15012018
+ * @see Pieza
+ */
 public class Rey extends Pieza{
+
+	/**
+	* Constructor que crea un Rey
+	* @param fila -- fila donde se encuentra el Rey
+	* @param columna -- columna donde se encuentra el Rey
+	* @param jugadorDelRey -- jugador de la pieza
+	*/
 	public Rey(int fila,int columna,Jugador jugadorDelRey){
 		super("Rey",fila,columna,jugadorDelRey);
 	}
 
+	/**
+	* Metodo que verifica el movimiento del Rey en un Tablero, donde arroja una excepcion si no es posible mover al Rey
+	* @see Tablero
+	* @param fila -- fila donde se encuentra el Rey
+	* @param columna -- columna donde se encuentra el Rey
+	* @param Tablero -- tablero donde se movera al Rey
+	* @throws MovimientoNoValidoExcepcion -- Se arroja si el movimiento del Rey no es valido
+	*/
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
 		if(this.validarCoordenadas(fila,columna)){
 			throw new MovimientoNoValidoExcepcion("No puedes desplazar a tu rey a su posicion actual");
@@ -84,6 +105,10 @@ public class Rey extends Pieza{
 		}
 	}
 	@Override
+	/**
+	* Metodo que regresa la representacion del Rey en cadena de texto
+	* @return String -- cadena del texto que representara al Rey
+	*/
 	public String toString(){
 		if(this==null) 
             return " ";

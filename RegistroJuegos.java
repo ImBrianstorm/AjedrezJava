@@ -8,6 +8,11 @@ import java.io.NotSerializableException;
 import java.io.EOFException;
 import java.io.FileNotFoundException;
 
+/**
+ *
+ * @author Mauricio Chávez
+ * @version 15012018
+ */
 public class RegistroJuegos implements Serializable{
 
 	private RegistroGanador[] arregloRegistros;
@@ -70,11 +75,12 @@ public class RegistroJuegos implements Serializable{
 		RegistroJuegos registro = null;
 		try{
 			lector = new ObjectInputStream(new FileInputStream("registroJuego.dat"));
-			do{
+			while(registro!=null){
 				registro = (RegistroJuegos) lector.readObject();
-			}while(registro!=null);
-		}catch(EOFException e){}
-		catch(ClassNotFoundException e){
+			}
+		}catch(EOFException e){
+
+		}catch(ClassNotFoundException e){
 			System.out.println((char)27 + "[31mEl objeto recuperado no es de la clase RegistroJuegos");
 		}catch(FileNotFoundException e){
 			System.out.println((char)27 + "[31mEl archivo registroJuego.dat no existe");
@@ -91,8 +97,10 @@ public class RegistroJuegos implements Serializable{
 				System.out.println((char)27 + "[31mNo hay ningun abierto");
 			}
 		}
-		this.arregloRegistros = registro.obtenerArregloRegistroGanador();
-		this.numeroRegistros = this.obtenerNumeroRegistros();
+		if(registro!=null){
+			this.arregloRegistros = registro.obtenerArregloRegistroGanador();
+			this.numeroRegistros = this.obtenerNumeroRegistros();
+		}
 	}
 
 	public void imprimirRegistros(){

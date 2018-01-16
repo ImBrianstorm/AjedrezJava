@@ -1,8 +1,29 @@
+/**
+ * Clase que simula el comportamiento de un Peon, heredando el comportamiento de una pieza
+ * @author Mauricio Chávez
+ * @version 15012018
+ * @see Pieza
+ */
 public class Peon extends Pieza{
+
+	/**
+	* Constructor que crea un Peon
+	* @param fila -- fila donde se encuentra el Peon
+	* @param columna -- columna donde se encuentra el Peon
+	* @param jugadorDelPeon -- jugador de la pieza
+	*/
 	public Peon(int fila,int columna,Jugador jugadorDelPeon){
 		super("Peon",fila,columna,jugadorDelPeon);
 	}
 
+	/**
+	* Metodo que verifica el movimiento del Peon en un Tablero, donde arroja una excepcion si no es posible mover al Peon
+	* @see Tablero
+	* @param fila -- fila donde se encuentra el Peon
+	* @param columna -- columna donde se encuentra el Peon
+	* @param Tablero -- tablero donde se movera al Peon
+	* @throws MovimientoNoValidoExcepcion -- Se arroja si el movimiento del Peon no es valido
+	*/
 	public void validarMovimiento(int fila,int columna,Tablero tablero) throws MovimientoNoValidoExcepcion{
 		if(columna!=this.obtenerColumna()){
 			if(this.obtenerNumeroJugador()==1){
@@ -85,9 +106,9 @@ public class Peon extends Pieza{
 
 	@Override
 	/**
-     *
-     * @param piezaEliminada
-     * @throws EliminacionInvalidaExcepcion
+     * Metodo que valida si es posible eliminar a una pieza, arrojando una excepcion si no es posible
+     * @param piezaEliminada -- La pieza a la que se va a eliminar
+     * @throws EliminacionInvalidaExcepcion -- Se arroja si no es posible eliminar
      */
     public void validarEliminar(Pieza piezaEliminada) throws EliminacionInvalidaExcepcion{
     	if(piezaEliminada==null){
@@ -102,6 +123,10 @@ public class Peon extends Pieza{
     }
 
     @Override
+    /**
+	* Metodo que regresa la representacion del Peon en cadena de texto
+	* @return String -- cadena del texto que representara al Peon
+	*/
 	public String toString(){
 		if(this==null) 
             return " ";

@@ -1,6 +1,7 @@
 /**
  *
  * @author Mauricio Chávez
+ * @version 15012018
  */
 public abstract class Pieza {
     private String nombre;

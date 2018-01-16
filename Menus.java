@@ -1,6 +1,11 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
+/**
+ *
+ * @author Mauricio Chávez
+ * @version 15012018
+ */
 public class Menus{
 	private Scanner io = new Scanner(System.in);
 	private Scanner in = new Scanner(System.in);

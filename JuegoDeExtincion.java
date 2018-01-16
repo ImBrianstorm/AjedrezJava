@@ -1,5 +1,11 @@
 import java.util.Random;
 
+
+/**
+ *
+ * @author Mauricio Chávez
+ * @version 15012018
+ */
 public class JuegoDeExtincion extends Tablero{
 
 	private int tipo;

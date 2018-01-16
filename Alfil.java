@@ -1,3 +1,9 @@
+/**
+ * Clase que simula el comportamiento de un Alfil, heredando el comportamiento de una pieza
+ * @author Mauricio Chávez
+ * @version 15012018
+ * @see Pieza
+ */
 public class Alfil extends Pieza{
 	public Alfil(int fila,int columna,Jugador jugadorDelAlfil){
 		super("Alfil",fila,columna,jugadorDelAlfil);

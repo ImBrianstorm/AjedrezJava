@@ -2,6 +2,11 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ *
+ * @author Mauricio Chávez
+ * @version 15012018
+ */
 public class RegistroGanador implements Serializable{
 	private Jugador primerJugador;
 	private Jugador segundoJugador;

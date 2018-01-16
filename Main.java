@@ -1,5 +1,16 @@
 import java.util.Scanner;
+
+/**
+ * Clase main de un Juego de Extincion
+ * @author Mauricio Chávez
+ * @version 15012018
+ */
 public class Main{
+
+	/**
+	* Metodo principal
+	* @param args -- argumentos de ejecucion, en este main, son inutiles
+	*/
 	public static void main(String[] args) throws TamañoNoSoportadoExcepcion,TipoNoValidoExcepcion,NivelNoValidoExcepcion,LimiteRegistrosAlcanzadoExcepcion{
 		Scanner io = new Scanner(System.in);
 		RegistroJuegos registro = new RegistroJuegos(100);
