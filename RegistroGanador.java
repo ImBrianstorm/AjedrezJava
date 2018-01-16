@@ -3,7 +3,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- *
+ * Clase que registra un juego, su fecha y su respectivo ganador
  * @author Mauricio Chávez
  * @version 15012018
  */
@@ -18,6 +18,12 @@ public class RegistroGanador implements Serializable{
 	private int minuto;
 	private int amPm;
 
+	/**
+	* Constructor que crea un nuevo registro, asignando a sus dos jugadores y su ganador
+	* @param primerJugador -- primer jugador del registro
+	* @param segundoJugador -- segundo jugador del registro, el cual puede ser una computadora
+	* @param ganador -- ganador del juego, admitiendo un jugador null en caso de que no lo haya
+	*/
 	public RegistroGanador(Jugador primerJugador,Jugador segundoJugador,Jugador ganador){
 		this.primerJugador = primerJugador;
 		this.segundoJugador = segundoJugador;
@@ -33,30 +39,59 @@ public class RegistroGanador implements Serializable{
 
 	}
 
+	/**
+	* Metodo que obtiene el primer Jugador del juego
+	* @return primerJugador
+	*/
 	public Jugador obtenerPrimerJugador(){
 		return primerJugador;
 	}
 
+	/**
+	* Metodo que obtiene el segundo Jugador del juego
+	* @return segundoJugador
+	*/
 	public Jugador obtenerSegundoJugador(){
 		return segundoJugador;
 	}
 
+	/**
+	* Metodo que obtiene el ganador del juego
+	* @return ganador
+	*/
 	public Jugador obtenerGanador(){
 		return ganador;
 	}
 
+	/**
+	* Metodo que asigna el parametro al primer Jugador del registro
+	* @param primerJugador -- Jugador a asignar
+	*/
 	public void asignarPrimerJugador(Jugador primerJugador){
 		this.primerJugador = primerJugador;
 	}
 
+	/**
+	* Metodo que asigna el parametro al segundo Jugador del registro
+	* @param segundoJugador -- Jugador a asignar
+	*/
 	public void asignarSegundoJugador(Jugador segundoJugador){
 		this.segundoJugador = segundoJugador;
 	}
 
+	/**
+	* Metodo que asigna el parametro al ganador del registro
+	* @param ganador -- Jugador a asignar
+	*/
 	public void asignarGanador(Jugador ganador){
 		this.ganador = ganador;
 	}
 
+	@Override
+	/**
+	* Metodo que obtiene el registro como una cadena de texto
+	* @return registro como cadena de texto
+	*/
 	public String toString(){
 		String ganadorJuego;
 		String jugadores;
@@ -67,7 +102,11 @@ public class RegistroGanador implements Serializable{
 			if(segundoJugador.obtenerTipoJugador()==1){
 				ganadorJuego = "\nGanador: " + ganador.obtenerNombreJugador();
 			}else{
-				ganadorJuego = "\nGano la computadora";
+				if(ganador.obtenerNumeroJugador()==1){
+					ganadorJuego = "\n¡Gano " + ganador.obtenerNombreJugador() + "!";
+				}else{
+					ganadorJuego = "\nGano la computadora";
+				}
 			}
 		}
 
@@ -80,6 +119,16 @@ public class RegistroGanador implements Serializable{
 		}else{
 			amPmString = "PM";
 		}
-		return "Fecha: " + dia + "/"  + mes + "/"  + anio + "\nHora: " + hora + ":" + minuto + " " + amPmString + jugadores + ganadorJuego;
+		return "Fecha: " + numeroToFecha(dia) + "/"  + numeroToFecha(mes) + "/"  + anio + "\nHora: " + numeroToFecha(hora) + ":" + numeroToFecha(minuto) + " " + amPmString + jugadores + ganadorJuego;
+	}
+
+	/**
+	*Metodo privado auxiliar que convierte un numero entero a formato fecha
+	*/
+	private static String numeroToFecha(int numero){
+		if(numero>9)
+			return String.valueOf(numero);
+		else
+			return "0" + String.valueOf(numero);
 	}
 }
