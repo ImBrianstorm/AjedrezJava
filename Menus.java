@@ -98,11 +98,11 @@ public class Menus{
 		boolean opcionInvalida;
 		System.out.print("\033[H\033[2J");
     	System.out.flush();
-		System.out.println((char)27 + "[37m" + nombrePrimerJugador + ", ¿jugaras contra otro jugador o contra la maquina?\n");
+		System.out.println((char)27 + "[37m" + nombrePrimerJugador + ", ¿jugaras contra otro jugador o contra la computadora?\n");
 		do{
 			opcionInvalida=false;
 			System.out.println((char)27 + "[36m1 = Humano");
-			System.out.println((char)27 + "[32m2 = Maquina\n");
+			System.out.println((char)27 + "[32m2 = Computadora\n");
 			System.out.print((char)27 + "[37mIngrese cualquier otro dato para salir: ");
 			try{
 				this.tipoJuego = Integer.parseInt(io.nextLine().trim());
@@ -148,7 +148,7 @@ public class Menus{
 		System.out.print((char)27 + "[37mIngrese cualquier otro dato para salir: ");
 		try{
 			this.opcionInicio = in.nextInt();
-			if(this.opcionInicio!=1&&this.opcionInicio!=2) throw new InputMismatchException();
+			if(this.opcionInicio<1||this.opcionInicio>4) throw new InputMismatchException();
 		}catch(InputMismatchException e){
 			System.out.println((char)27 + "[37m\nHasta luego :)");
 			System.exit(0);
@@ -203,13 +203,13 @@ public class Menus{
 		String opcion;
 		System.out.println((char)27 + "[37m\n¡Felicidades, " + jugadorEnTurno.obtenerNombreJugador() +"! Tu peon ha llegado a la ultima fila.");
 		System.out.println((char)27 + "[37mEsto quiere decir que puede coronarse y convertirse en dama, torre o caballo");
-		System.out.println((char)27 + "[37m¿Deseas hacerlo? Escribe SI para coronar a tu peon, ingresa otro dato en caso contrario:");
+		System.out.print((char)27 + "[37m¿Deseas hacerlo? Escribe SI para coronar a tu peon, ingresa otro dato en caso contrario: ");
 		opcion = io.nextLine().trim().toLowerCase();
 
 		String pieza;
 		if(opcion.equals("si")||opcion.equals("sí")){
 			System.out.println((char)27 + "[37m\n¿En que pieza deseas que se convierta?\n");
-			System.out.println((char)27 + "[31m1 = Torre");
+			System.out.println((char)27 + "[32m1 = Torre");
 			System.out.println((char)27 + "[36m2 = Caballo");
 			System.out.println((char)27 + "[33m3 = Dama\n");
 			System.out.print((char)27 + "[37mIngrese cualquier otro dato para no coronar: ");

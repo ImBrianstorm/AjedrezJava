@@ -7,6 +7,7 @@ public class JuegoDeExtincion extends Tablero{
 	private int nivel;
 	private Jugador primerJugador;
 	private Jugador segundoJugador;
+	private Jugador ganador;
 	private boolean noEsPosibleMover;
 	private boolean coronacionPeon;
 	private boolean leyendaCapturadoHumano;
@@ -14,7 +15,6 @@ public class JuegoDeExtincion extends Tablero{
 	private Pieza piezaACoronar;
 	private int filaCoronacion;
 	private int columnaCoronacion;
-	private Jugador ganador;
 	
 	private int numeroPeonesJ1;
 	private int numeroTorresJ1;
@@ -43,12 +43,20 @@ public class JuegoDeExtincion extends Tablero{
 		}
 		else if(tipo==2){
 			primerJugador = new Jugador(1,1,nombrePrimerJugador);
-			segundoJugador = new Jugador(2,2,"IA");
+			segundoJugador = new Jugador(2,2,"Computadora");
 		}
 		if(tipoJuego<1||tipoJuego>2)
 			throw new TipoNoValidoExcepcion("Este constructor solo admite tipo 1 (humano) o tipo 2 (computadora");
 		if(nivel<1||nivel>3)
 			throw new NivelNoValidoExcepcion("Este constructor solo admite del nivel 1 al nivel 3");
+	}
+
+	public Jugador obtenerPrimerJugador(){
+		return primerJugador;
+	}
+
+	public Jugador obtenerSegundoJugador(){
+		return segundoJugador;
 	}
 
 	public Jugador obtenerGanador(){
@@ -183,7 +191,6 @@ public class JuegoDeExtincion extends Tablero{
 		//Coronacion del peon
 		if(pieza.obtenerNombre().equals("Peon") && noEsPosibleMover==false){
 			activarCoronacionPeon(pieza,fila,columna);
-			desactivarCoronacionPeon();
 		}
 		jugadorEnTurno.sumarTurno();
 	}
@@ -321,6 +328,9 @@ public class JuegoDeExtincion extends Tablero{
 				if(ganador!=null)
 					break;
 				if(coronacionPeon==true){
+					System.out.print("\033[H\033[2J");
+    				System.out.flush();
+					System.out.println((char)27 + "[37m\n" + super.toString());
 					coronacionPeon(1,primerJugador);
 					desactivarCoronacionPeon();
 				}
@@ -331,6 +341,9 @@ public class JuegoDeExtincion extends Tablero{
 				if(ganador!=null)
 					break;
 				if(coronacionPeon==true){
+					System.out.print("\033[H\033[2J");
+    				System.out.flush();
+					System.out.println((char)27 + "[37m\n" + super.toString());
 					coronacionPeon(1,segundoJugador);
 					desactivarCoronacionPeon();
 				}
@@ -357,6 +370,9 @@ public class JuegoDeExtincion extends Tablero{
 				if(ganador!=null)
 					break;
 				if(coronacionPeon==true){
+					System.out.print("\033[H\033[2J");
+    				System.out.flush();
+					System.out.println((char)27 + "[37m\n" + super.toString());
 					coronacionPeon(1,primerJugador);
 					desactivarCoronacionPeon();
 				}

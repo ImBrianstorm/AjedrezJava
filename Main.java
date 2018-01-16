@@ -1,17 +1,19 @@
 import java.util.Scanner;
 public class Main{
-	public static void main(String[] args) throws TamañoNoSoportadoExcepcion,TipoNoValidoExcepcion,NivelNoValidoExcepcion{
+	public static void main(String[] args) throws TamañoNoSoportadoExcepcion,TipoNoValidoExcepcion,NivelNoValidoExcepcion,LimiteRegistrosAlcanzadoExcepcion{
 		Scanner io = new Scanner(System.in);
+		RegistroJuegos registro = new RegistroJuegos(100);
+		Menus menu = new Menus();
 		String nombreJ1;
 		String nombreJ2;
 		int opcionInicio;
 		int tipoJuego;
 		int nivelJuego;
 
-		Menus menu = new Menus();
 		menu.menuNombreJ1();
 		nombreJ1 = menu.obtenerNombrePrimerJugador();
 		menu.menuOpcionesInicio();
+
 		switch(menu.obtenerOpcionInicio()){
 			case 1:
 			menu.menuTipoJuego();
@@ -20,7 +22,7 @@ public class Main{
 				menu.menuNombreJ2();
 				nombreJ2 = menu.obtenerNombreSegundoJugador();
 			}else{
-				nombreJ2 = "Computadora";
+				nombreJ2 = "Maquina";
 			}
 			menu.menuNivelJuego();
 			nivelJuego = menu.obtenerNivelJuego();
@@ -28,6 +30,14 @@ public class Main{
 			JuegoDeExtincion juego = new JuegoDeExtincion(tipoJuego,nivelJuego,nombreJ1,nombreJ2);
 			juego.iniciarJuego();
 			juego.jugar();
+			registro.registrarJuego(new RegistroGanador(juego.obtenerPrimerJugador(),juego.obtenerSegundoJugador(),juego.obtenerGanador()));
+			registro.guardarRegistroJuego();
+			break;
+
+			case 3:
+			registro.leerRegistroJuegos();
+			registro.imprimirRegistros();
+			break;
 		}
 	}
 }
