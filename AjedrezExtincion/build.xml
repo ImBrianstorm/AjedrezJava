@@ -1,0 +1,26 @@
+<project>
+  <target name="clean">
+    <delete dir="build"/>
+    <delete dir="data"/>
+  </target>
+
+  <target name="compile">
+      <mkdir dir="build/classes"/>
+      <javac srcdir="src" destdir="build/classes"/>
+  </target>
+
+  <target name="build" depends="compile">
+    <mkdir dir="build/jar"/>
+    <mkdir dir="data"/>
+    <jar destfile="build/jar/Ajedrez.jar" basedir="build/classes">
+      <manifest>
+        <attribute name="Main-Class" value="ajedrez.main.Main"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="run" depends="build,compile">
+    <java jar="build/jar/Ajedrez.jar" fork="true"/>
+  </target>
+
+</project>

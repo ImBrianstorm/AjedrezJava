@@ -1,11 +1,22 @@
-import java.util.Scanner;
-import java.util.InputMismatchException;
-
 /**
  * Clase que imprime menus y obtiene datos
  * @author Mauricio Chávez
  * @version 15012018
  */
+
+package ajedrez.main;
+
+import java.util.Scanner;
+import java.util.InputMismatchException;
+import ajedrez.juego.pieza.Pieza;
+import ajedrez.juego.pieza.Torre;
+import ajedrez.juego.pieza.Caballo;
+import ajedrez.juego.pieza.Dama;
+import ajedrez.juego.tablero.Tablero;
+import ajedrez.juego.jugador.Jugador;
+import ajedrez.excepciones.CoordenadaNoValidaExcepcion;
+import ajedrez.excepciones.MovimientoNoValidoExcepcion;
+
 public class Menus{
 	private Scanner io = new Scanner(System.in);
 	private Scanner in = new Scanner(System.in);
@@ -148,7 +159,7 @@ public class Menus{
 		System.out.println((char)27 + "[36m  Para mover tus piezas, solo basta con ingresar sus coordenadas");
 		System.out.println((char)27 + "[36m  en la forma columna-fila. Primero la letra, luego el numero   ");
 		System.out.println((char)27 + "[36m  (F5, por ejemplo). No te preocupes por mover una pieza a una  ");
-		System.out.println((char)27 + "[36m  posicion no valida. El juego no te lo permitira, te dira la   ");  
+		System.out.println((char)27 + "[36m  posicion no valida. El juego no te lo permitira, te dira la   ");
 		System.out.println((char)27 + "[36m  razon y te permitira hacer tu seleccion de nuevo.             ");
 		System.out.println((char)27 + "[31m                                                                ");
 		System.out.println((char)27 + "[34m  Si juegas contra un humano, el tablero girara para tu propia  ");
@@ -269,7 +280,7 @@ public class Menus{
 	*/
 	public void menuOpcionesInicio(){
 		System.out.print("\033[H\033[2J");
-    	System.out.flush();
+    System.out.flush();
 		System.out.println((char)27 + "[37mHola " + nombrePrimerJugador + ", selecciona que deseas hacer a continuacion:\n");
 		System.out.println((char)27 + "[31m1 = Jugar");
 		System.out.println((char)27 + "[32m2 = Ver las instrucciones");
@@ -307,7 +318,7 @@ public class Menus{
 		}
 		columnaInicial = asciiToColumna(coordenadas.charAt(0));
 		try{
-			filaInicial = Integer.parseInt(coordenadas.substring(1));	
+			filaInicial = Integer.parseInt(coordenadas.substring(1));
 		}catch(NumberFormatException e){
 			throw new CoordenadaNoValidaExcepcion("No ingresaste un numero a continuacion de tu letra (ejemplo valido: F5)");
 		}
@@ -332,10 +343,10 @@ public class Menus{
 		coordenadas = io.nextLine().trim().toUpperCase();
 		if((int)coordenadas.charAt(0)<65||(int)coordenadas.charAt(0)>90)
 			throw new CoordenadaNoValidaExcepcion("No ingresaste una letra al inicio (ejemplo valido: F5)");
-		else 
+		else
 			columnaFinal = asciiToColumna(coordenadas.charAt(0));
 		try{
-			filaFinal = Integer.parseInt(coordenadas.substring(1));	
+			filaFinal = Integer.parseInt(coordenadas.substring(1));
 		}catch(NumberFormatException e){
 			throw new CoordenadaNoValidaExcepcion("No ingresaste un numero a continuacion de tu letra (ejemplo valido: F5)");
 		}

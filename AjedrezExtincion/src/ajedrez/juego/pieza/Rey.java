@@ -4,6 +4,13 @@
  * @version 15012018
  * @see Pieza
  */
+
+package ajedrez.juego.pieza;
+
+import ajedrez.excepciones.MovimientoNoValidoExcepcion;
+import ajedrez.juego.jugador.Jugador;
+import ajedrez.juego.tablero.Tablero;
+
 public class Rey extends Pieza{
 
 	/**
@@ -29,7 +36,7 @@ public class Rey extends Pieza{
 			throw new MovimientoNoValidoExcepcion("No puedes desplazar a tu rey a su posicion actual");
 		}
 		else if(this.obtenerColumna()!=columna&&this.obtenerFila()!=fila){
-			if(Math.pow(this.obtenerFila()-fila,2)!=1||Math.pow(this.obtenerColumna()-columna,2)!=1) 
+			if(Math.pow(this.obtenerFila()-fila,2)!=1||Math.pow(this.obtenerColumna()-columna,2)!=1)
 				throw new MovimientoNoValidoExcepcion("No puedes desplazar a tu rey a esta posicion");
 		}
 		else if(this.obtenerColumna()==columna&&this.obtenerFila()!=fila){
@@ -110,7 +117,7 @@ public class Rey extends Pieza{
 	* @return String -- cadena del texto que representara al Rey
 	*/
 	public String toString(){
-		if(this==null) 
+		if(this==null)
             return " ";
         else
             return (super.obtenerNumeroJugador()==1) ? "♔" : "♚";

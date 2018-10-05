@@ -3,6 +3,14 @@
  * @author Mauricio Chávez
  * @version 15012018
  */
+
+package ajedrez.juego.pieza;
+
+import ajedrez.excepciones.MovimientoNoValidoExcepcion;
+import ajedrez.excepciones.EliminacionInvalidaExcepcion;
+import ajedrez.juego.jugador.Jugador;
+import ajedrez.juego.tablero.Tablero;
+
 public abstract class Pieza {
     private String nombre;
     private Jugador jugadorDeLaPieza;
@@ -167,7 +175,7 @@ public abstract class Pieza {
     public int obtenerColumna(){
         return columna;
     }
-    
+
     /**
     *Metodo que obtiene el jugador de la Pieza
     * @return jugadorDeLaPieza
@@ -271,14 +279,14 @@ public abstract class Pieza {
             throw new EliminacionInvalidaExcepcion("No puedes eliminar esta pieza porque es tuya");
         }
     }
-    
+
     @Override
     /**
      * Metodo que regresa una pieza como una representacion en una cadena de texto, no imprimiendo algo en caso de que la pieza sea null, imprimiendo su primer letra mayuscula si pertenece al primer jugador e imprimiendo su primera letra minuscula si pertenece al segundo jugador
      * @return Pieza como una cadena de texto
      */
     public String toString(){
-        if(this==null) 
+        if(this==null)
             return " ";
         else
             return (numeroJugador==1) ? String.valueOf(nombre.charAt(0)) : String.valueOf(nombre.charAt(0)).toLowerCase();

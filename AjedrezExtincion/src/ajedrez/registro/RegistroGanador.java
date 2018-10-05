@@ -1,12 +1,16 @@
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 /**
  * Clase que registra un juego, su fecha y su respectivo ganador
  * @author Mauricio Chávez
  * @version 15012018
  */
+
+package ajedrez.registro;
+
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import ajedrez.juego.jugador.Jugador;
+
 public class RegistroGanador implements Serializable{
 	private Jugador primerJugador;
 	private Jugador segundoJugador;

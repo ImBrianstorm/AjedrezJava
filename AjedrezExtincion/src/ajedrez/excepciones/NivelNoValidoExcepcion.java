@@ -3,6 +3,9 @@
  * @author Mauricio Chávez
  * @version 15012018
  */
+
+package ajedrez.excepciones;
+
 public class NivelNoValidoExcepcion extends Exception{
 
 	/**

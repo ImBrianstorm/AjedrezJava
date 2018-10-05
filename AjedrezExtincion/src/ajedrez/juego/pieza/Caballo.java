@@ -4,6 +4,13 @@
  * @version 15012018
  * @see Pieza
  */
+
+package ajedrez.juego.pieza;
+
+import ajedrez.excepciones.MovimientoNoValidoExcepcion;
+import ajedrez.juego.jugador.Jugador;
+import ajedrez.juego.tablero.Tablero;
+
 public class Caballo extends Pieza{
 
 	/**
@@ -35,7 +42,7 @@ public class Caballo extends Pieza{
 	* @return String -- cadena del texto que representara al Caballo
 	*/
 	public String toString(){
-		if(this==null) 
+		if(this==null)
             return " ";
         else
             return (super.obtenerNumeroJugador()==1) ? "♘" : "♞";

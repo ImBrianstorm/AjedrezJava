@@ -1,3 +1,11 @@
+/**
+ * Clase que registra juegos en un arreglo y los guarda en un archivo
+ * @author Mauricio Chávez
+ * @version 15012018
+ */
+
+package ajedrez.registro;
+
 import java.io.Serializable;
 import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
@@ -7,12 +15,8 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.EOFException;
 import java.io.FileNotFoundException;
+import ajedrez.excepciones.LimiteRegistrosAlcanzadoExcepcion;
 
-/**
- * Clase que registra juegos en un arreglo y los guarda en un archivo
- * @author Mauricio Chávez
- * @version 15012018
- */
 public class RegistroJuegos implements Serializable{
 
 	private RegistroGanador[] arregloRegistros;
@@ -41,7 +45,7 @@ public class RegistroJuegos implements Serializable{
 	}
 
 	/**
-	* Constructor de copia 
+	* Constructor de copia
 	* @param registroJuegos
 	*/
 	public RegistroJuegos(RegistroJuegos registroJuegos){
@@ -119,7 +123,7 @@ public class RegistroJuegos implements Serializable{
 	public void guardarRegistroJuego(){
 		ObjectOutputStream escritor = null;
 		try{
-			escritor = new ObjectOutputStream(new FileOutputStream("registroJuego.dat"));
+			escritor = new ObjectOutputStream(new FileOutputStream("../../data/registroJuego.dat"));
 			for(int i=0;i<numeroRegistros;i++){
 				escritor.writeObject(arregloRegistros[i]);
 			}
@@ -147,7 +151,7 @@ public class RegistroJuegos implements Serializable{
 	public void leerRegistroJuegos(){
 		ObjectInputStream lector = null;
 		try{
-			lector = new ObjectInputStream(new FileInputStream("registroJuego.dat"));
+			lector = new ObjectInputStream(new FileInputStream("../../data/registroJuego.dat"));
 			numeroRegistros = 0;
 			Object objeto;
 			do{
@@ -174,7 +178,7 @@ public class RegistroJuegos implements Serializable{
 			}
 		}
 	}
-	
+
 	/**
 	* Metodo que imprime en pantalla todos los registros del arreglo
 	*/
@@ -197,4 +201,3 @@ public class RegistroJuegos implements Serializable{
 	}
 
 }
-

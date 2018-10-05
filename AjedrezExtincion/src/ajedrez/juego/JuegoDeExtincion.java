@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /**
  * Clase que se encarga de ajustar distintas clases para jugar JuegoDeExtincion
  * @see Tablero
@@ -9,6 +7,22 @@ import java.util.Random;
  * @author Mauricio Chávez
  * @version 15012018
  */
+
+package ajedrez.juego;
+
+import java.util.Random;
+import ajedrez.juego.tablero.Tablero;
+import ajedrez.juego.pieza.*;
+import ajedrez.juego.jugador.Jugador;
+import ajedrez.main.Menus;
+import ajedrez.excepciones.TipoNoValidoExcepcion;
+import ajedrez.excepciones.NivelNoValidoExcepcion;
+import ajedrez.excepciones.EliminacionInvalidaExcepcion;
+import ajedrez.excepciones.MovimientoNoValidoExcepcion;
+import ajedrez.excepciones.CapturaNoValidaExcepcion;
+import ajedrez.excepciones.TamañoNoSoportadoExcepcion;
+import ajedrez.excepciones.CoordenadaNoValidaExcepcion;
+
 public class JuegoDeExtincion extends Tablero{
 
 	private int tipo;
@@ -24,7 +38,7 @@ public class JuegoDeExtincion extends Tablero{
 	private Pieza piezaACoronar;
 	private int filaCoronacion;
 	private int columnaCoronacion;
-	
+
 	private int numeroPeonesJ1;
 	private int numeroTorresJ1;
 	private int numeroCaballosJ1;
@@ -122,7 +136,7 @@ public class JuegoDeExtincion extends Tablero{
 	*Metodo que inicia el juego, preparandolo para jugarlo
 	*/
 	public void iniciarJuego(){
-		
+
 		//JUGADOR 1
 		tablero[5][0] = new Torre(6,1,primerJugador);
 		tablero[5][1] = new Caballo(6,2,primerJugador);
@@ -138,7 +152,7 @@ public class JuegoDeExtincion extends Tablero{
 		numeroCaballosJ1 = 2;
 		numeroDamasJ1 = 1;
 		numeroReyesJ1 = 1;
-		
+
 		//JUGADOR 2
 		tablero[0][0] = new Torre(1,1,segundoJugador);
 		tablero[0][1] = new Caballo(1,2,segundoJugador);
@@ -176,7 +190,7 @@ public class JuegoDeExtincion extends Tablero{
 			if(tipoJugador==1)
 				System.out.println((char)27 + "[31m" + e);
 			throw new EliminacionInvalidaExcepcion();
-		}	
+		}
 	}
 
 	/**
@@ -223,7 +237,7 @@ public class JuegoDeExtincion extends Tablero{
 					activarLeyendaCapturadoComputadora();
 			}
 			super.quitarPiezaTablero(pieza);
-			tablero[fila-1][columna-1] = pieza;			
+			tablero[fila-1][columna-1] = pieza;
 			tablero[fila-1][columna-1].asignarPosicion(fila,columna);
 			tablero[fila-1][columna-1].sumarMovimiento();
 		}catch(MovimientoNoValidoExcepcion e){
@@ -317,7 +331,7 @@ public class JuegoDeExtincion extends Tablero{
 			}catch(TipoNoValidoExcepcion e){
 			}
 		}while(coordenadaNoValida||movimientoNoValido);
-		
+
 		turnos++;
 	}
 
@@ -343,14 +357,14 @@ public class JuegoDeExtincion extends Tablero{
 
 				if(super.obtenerPieza(filaInicial,columnaInicial)==null)
 					piezaInamovible = true;
-				else 
+				else
 					if(super.obtenerPieza(filaInicial,columnaInicial).obtenerNumeroJugador()!=numeroJugador)
 						piezaInamovible = true;
 			}while(piezaInamovible);
 
 			filaFinal = rdm.nextInt(super.obtenerNumeroFilas())+1;
 			columnaFinal = rdm.nextInt(super.obtenerNumeroColumnas())+1;
-			
+
 			try{
 				this.moverPieza(super.obtenerPieza(filaInicial,columnaInicial),filaFinal,columnaFinal,jugadorEnTurno);
 			}catch(MovimientoNoValidoExcepcion e){
@@ -419,12 +433,12 @@ public class JuegoDeExtincion extends Tablero{
     		System.out.flush();
 			System.out.println("\n" + super.toString());
 			System.out.println("JUEGO TERMINADO");
-			
+
 			if(ganador==null)
 				System.out.println((char)27 + "[32m¡Es un empate!");
 			else
 				System.out.println((char)27 + "[32m¡El ganador es " + ganador.obtenerNombreJugador() + "! :)");
-			
+
 		}
 		else if(this.tipo==2){
 			for(int i=0;i<turnosNivel;i++){
@@ -456,7 +470,7 @@ public class JuegoDeExtincion extends Tablero{
     		System.out.flush();
 			System.out.println("\n" + super.toString());
 			System.out.println("JUEGO TERMINADO");
-			
+
 			if(ganador==null)
 				System.out.println((char)27 + "[31m¡Ha ganado la computadora! :(");
 			else{
@@ -682,5 +696,3 @@ public class JuegoDeExtincion extends Tablero{
 		super.quitarPiezaTablero(peonAtacado);
 	}
 }
-
-

@@ -1,10 +1,20 @@
-import java.util.Scanner;
-
 /**
  * Clase main de un Juego de Extincion
  * @author Mauricio Chávez
  * @version 15012018
  */
+
+package ajedrez.main;
+
+import java.util.Scanner;
+import ajedrez.registro.RegistroJuegos;
+import ajedrez.registro.RegistroGanador;
+import ajedrez.juego.JuegoDeExtincion;
+import ajedrez.excepciones.TamañoNoSoportadoExcepcion;
+import ajedrez.excepciones.TipoNoValidoExcepcion;
+import ajedrez.excepciones.NivelNoValidoExcepcion;
+import ajedrez.excepciones.LimiteRegistrosAlcanzadoExcepcion;
+
 public class Main{
 
 	/**
@@ -24,7 +34,7 @@ public class Main{
 
 		menu.menuNombreJ1();
 		nombreJ1 = menu.obtenerNombrePrimerJugador();
-		
+
 		do{
 			repetir=false;
 			menu.menuOpcionesInicio();
@@ -65,7 +75,7 @@ public class Main{
 				registro.imprimirRegistros();
 				break;
 			}
-			
+
 			menu.menuRepeticion();
 			repetir = menu.obtenerRepetir();
 

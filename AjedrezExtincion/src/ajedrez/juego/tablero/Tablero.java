@@ -3,6 +3,12 @@
  * @author Mauricio Chávez
  * @version 15012018
  */
+
+package ajedrez.juego.tablero;
+
+import ajedrez.excepciones.TamañoNoSoportadoExcepcion;
+import ajedrez.juego.pieza.Pieza;
+
 public class Tablero{
 
 	protected Pieza[][] tablero;
@@ -149,11 +155,11 @@ public class Tablero{
 	private String lineaPiezas(int fila){
 	    String string = " " + fila +"  ║ ";
 	    for(int i=0;i<numeroColumnas;i++){
-	    	if(tablero[fila-1][i]==null) 
+	    	if(tablero[fila-1][i]==null)
 	    		string+= "  ║ ";
-	    	else 
+	    	else
 	    		string += tablero[fila-1][i].toString() + " ║ ";
-	    } 
+	    }
 	    return string +"\n";
 	}
 

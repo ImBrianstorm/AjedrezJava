@@ -3,6 +3,9 @@
  * @author Mauricio Chávez
  * @version 15012018
  */
+
+package ajedrez.excepciones;
+
 public class TipoNoValidoExcepcion extends Exception{
 
 	/**
@@ -14,7 +17,7 @@ public class TipoNoValidoExcepcion extends Exception{
 	/**
 	* Excepcion para arrojar cuando un tipo no es valido, especificando el mensaje de la misma
 	* @param msg -- El mensaje de la excepcion
-	*/	
+	*/
 	public TipoNoValidoExcepcion(String msg) {
         super(msg);
     }

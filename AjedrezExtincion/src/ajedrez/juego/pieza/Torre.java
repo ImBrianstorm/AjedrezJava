@@ -4,6 +4,13 @@
  * @version 15012018
  * @see Pieza
  */
+
+package ajedrez.juego.pieza;
+
+import ajedrez.excepciones.MovimientoNoValidoExcepcion;
+import ajedrez.juego.jugador.Jugador;
+import ajedrez.juego.tablero.Tablero;
+
 public class Torre extends Pieza{
 
 	/**
@@ -69,7 +76,7 @@ public class Torre extends Pieza{
 	* @return String -- cadena del texto que representara a la Torre
 	*/
 	public String toString(){
-		if(this==null) 
+		if(this==null)
             return " ";
         else
             return (super.obtenerNumeroJugador()==1) ? "♖" : "♜";
