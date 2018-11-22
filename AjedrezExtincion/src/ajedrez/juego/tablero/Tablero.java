@@ -9,7 +9,7 @@ package ajedrez.juego.tablero;
 import ajedrez.excepciones.TamañoNoSoportadoExcepcion;
 import ajedrez.juego.pieza.Pieza;
 
-public class Tablero{
+public class Tablero {
 
 	protected Pieza[][] tablero;
 	private int numeroFilas;
